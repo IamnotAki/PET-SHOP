@@ -95,17 +95,47 @@
       position: fixed; right: -400px; top: 0; width: 350px; height: 100%;
       background: #fff; box-shadow: -2px 0 8px rgba(0,0,0,0.2);
       transition: right 0.3s; z-index: 1000; padding: 20px;
+      display: flex; flex-direction: column;
     }
     #cartSidebar.active { right: 0; }
     #cartSidebar h3 { color: #6c3bb6; margin-bottom: 15px; }
-    #cartItems { max-height: 70%; overflow-y: auto; }
-    .cart-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    #cartItems { flex: 1; overflow-y: auto; }
+
+    .cart-item {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
     .cart-item img { width: 50px; height: 50px; object-fit: contain; }
     .cart-item div { flex: 1; margin-left: 10px; }
-    #checkoutBtn {
-      background: #6c3bb6; color: white; border: none;
-      width: 100%; padding: 10px; border-radius: 25px; cursor: pointer;
+
+    #cartFooter {
+      border-top: 1px solid #eee;
+      padding-top: 10px;
+      background: white;
+      position: sticky;
+      bottom: 0;
     }
+
+    #cartTotal {
+      font-weight: bold;
+      color: #6c3bb6;
+      text-align: right;
+      margin: 10px 0;
+      font-size: 18px;
+    }
+
+    #backBtn, #checkoutBtn {
+      width: 100%;
+      padding: 10px;
+      border-radius: 25px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    #backBtn { background: #999; }
+    #checkoutBtn { background: #6c3bb6; }
 
     /* Checkout Modal */
     #checkoutModal {
@@ -157,15 +187,15 @@
   <!-- Product Section -->
   <h2 class="section-title">🐶 Royal Canin Product Sale</h2>
   <div class="products">
-    <div class="product-card" onclick="openProduct('Royal Canin Mini Adult 1.5kg', 810, 'https://cdn.shopify.com/s/files/1/0608/8903/2899/products/royal1.png')">
-      <img src="https://cdn.shopify.com/s/files/1/0608/8903/2899/products/royal1.png" alt="Product">
+    <div class="product-card" onclick="openProduct('Royal Canin Mini Adult 1.5kg', 810, 'product1.png')">
+      <img src="product1.png" alt="Product">
       <h3>Royal Canin Mini Adult 1.5kg</h3>
       <p>₱810.00</p>
     </div>
-    <div class="product-card" onclick="openProduct('Royal Canin Maxi Adult 1.5kg', 955, 'https://cdn.shopify.com/s/files/1/0608/8903/2899/products/royal2.png')">
-      <img src="https://cdn.shopify.com/s/files/1/0608/8903/2899/products/royal2.png" alt="Product">
-      <h3>Royal Canin Maxi Adult 1.5kg</h3>
-      <p>₱955.00</p>
+    <div class="product-card" onclick="openProduct('Royal Canin Maxi Adult 10kg', 2950, 'product2.png')">
+      <img src="product2.png" alt="Royal Canin Maxi Adult">
+      <h3>Royal Canin Maxi Adult 10kg</h3>
+      <p>₱2,950.00</p>
     </div>
   </div>
 
@@ -195,7 +225,13 @@
   <div id="cartSidebar">
     <h3>Your Cart</h3>
     <div id="cartItems"></div>
-    <button id="checkoutBtn" onclick="openCheckout()">Check Out</button>
+
+    <!-- ✅ Sticky footer section -->
+    <div id="cartFooter">
+      <div id="cartTotal">Total: ₱0.00</div>
+      <button id="backBtn" onclick="closeCart()">← Back</button>
+      <button id="checkoutBtn" onclick="openCheckout()">Check Out</button>
+    </div>
   </div>
 
   <!-- Checkout Modal -->
@@ -222,6 +258,7 @@
     const cartSidebar = document.getElementById("cartSidebar");
     const cartItems = document.getElementById("cartItems");
     const checkoutModal = document.getElementById("checkoutModal");
+    const cartTotal = document.getElementById("cartTotal");
 
     function openProduct(name, price, img) {
       currentProduct = { name, price, img };
@@ -233,9 +270,7 @@
       qtyDisplay.textContent = qty;
     }
 
-    function closeModal() {
-      modal.style.display = 'none';
-    }
+    function closeModal() { modal.style.display = 'none'; }
 
     function changeQty(amount) {
       qty = Math.max(1, qty + amount);
@@ -254,7 +289,10 @@
     function updateCartSidebar() {
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
       cartItems.innerHTML = '';
+      let total = 0;
+
       cart.forEach(item => {
+        total += item.price * item.qty;
         let div = document.createElement('div');
         div.classList.add('cart-item');
         div.innerHTML = `
@@ -267,6 +305,8 @@
         `;
         cartItems.appendChild(div);
       });
+
+      cartTotal.textContent = "Total: ₱" + total.toFixed(2);
     }
 
     function removeItem(name) {
@@ -291,6 +331,10 @@
       localStorage.removeItem('cart');
       checkoutModal.style.display = "none";
       updateCartSidebar();
+    }
+
+    function closeCart() {
+      cartSidebar.classList.remove("active");
     }
 
     window.onclick = function(e) {
