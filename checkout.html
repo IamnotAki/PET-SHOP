@@ -12,15 +12,12 @@
       display: flex;
       justify-content: center;
       background:
-        /* Top left stripes */
         linear-gradient(135deg, #ffc107 10%, transparent 10%) top left,
         linear-gradient(135deg, #ffc107 10%, transparent 10%) 15px top left,
         linear-gradient(135deg, #ffc107 10%, transparent 10%) 30px top left,
-        /* Top right stripes */
         linear-gradient(-135deg, #ffc107 10%, transparent 10%) top right,
         linear-gradient(-135deg, #ffc107 10%, transparent 10%) 15px top right,
         linear-gradient(-135deg, #ffc107 10%, transparent 10%) 30px top right,
-        /* Bottom gradient */
         linear-gradient(to top right, #ffcc33, white 60%);
       background-repeat: no-repeat;
       background-size:
@@ -187,47 +184,83 @@
       <a href="PET SHOP PROJECT.html" class="back-btn">← Back to Home</a>
     </div>
 
-   <!-- RIGHT SIDE -->
-<div class="checkout-right">
-  <div class="checkout-summary" id="order-summary">
-    <!-- JS will load product info here -->
-  </div>
-</div>
-
-<script>
-  const product = JSON.parse(localStorage.getItem('selectedProduct'));
-  const summary = document.getElementById('order-summary');
-
-  if (product) {
-    const shipping = 150;
-    const subtotal = product.price;
-    const total = subtotal + shipping;
-
-    summary.innerHTML = `
-      <h3>Your Order</h3>
-      <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-        <img src="${product.image}" alt="${product.name}">
-        <div>
-          <h4>${product.name}</h4>
-          <p>₱${subtotal.toLocaleString()}</p>
-        </div>
+    <!-- RIGHT SIDE -->
+    <div class="checkout-right">
+      <div class="checkout-summary" id="order-summary">
+        <!-- Product details will be inserted here -->
       </div>
-      <hr>
-      <p>Subtotal: ₱${subtotal.toLocaleString()}</p>
-      <p>Shipping: ₱${shipping.toLocaleString()}</p>
-      <div class="total">Total: ₱${total.toLocaleString()}</div>
-    `;
-  } else {
-    summary.innerHTML = `
-      <h3>Your Order</h3>
-      <p>No product selected. Please go back and choose a product.</p>
-      <a href="PET SHOP PROJECT.html" class="back-btn">← Back to Home</a>
-    `;
-  }
-</script>
+    </div>
+  </div>
 
+  <script>
+    const summary = document.getElementById('order-summary');
+    const product = JSON.parse(localStorage.getItem('selectedProduct'));
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  
+    function renderSingleProduct(p) {
+      const shipping = 150;
+      const subtotal = p.price * (p.qty || 1);
+      const total = subtotal + shipping;
+
+      summary.innerHTML = `
+        <h3>Your Order</h3>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+          <img src="${p.image}" alt="${p.name}">
+          <div>
+            <h4>${p.name}</h4>
+            <p>₱${p.price.toLocaleString()} × ${p.qty || 1}</p>
+          </div>
+        </div>
+        <hr>
+        <p>Subtotal: ₱${subtotal.toLocaleString()}</p>
+        <p>Shipping: ₱${shipping.toLocaleString()}</p>
+        <div class="total">Total: ₱${total.toLocaleString()}</div>
+      `;
+    }
+
+    function renderCartItems(items) {
+      let subtotal = 0;
+      const shipping = 150;
+      let list = `<h3>Your Order</h3>`;
+
+      items.forEach(item => {
+        const qty = item.qty || 1;
+        const itemTotal = item.price * qty;
+        subtotal += itemTotal;
+        list += `
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <img src="${item.image || item.img}" alt="${item.name}">
+            <div>
+              <h4>${item.name}</h4>
+              <p>₱${item.price.toLocaleString()} × ${qty}</p>
+            </div>
+          </div>
+        `;
+      });
+
+      const total = subtotal + shipping;
+      list += `
+        <hr>
+        <p>Subtotal: ₱${subtotal.toLocaleString()}</p>
+        <p>Shipping: ₱${shipping.toLocaleString()}</p>
+        <div class="total">Total: ₱${total.toLocaleString()}</div>
+      `;
+      summary.innerHTML = list;
+    }
+
+    // Priority: Show Buy Now product > Cart items > Fallback message
+    if (product && product.name) {
+      renderSingleProduct(product);
+    } else if (cart.length > 0) {
+      renderCartItems(cart);
+    } else {
+      summary.innerHTML = `
+        <h3>Your Order</h3>
+        <p>No product selected. Please go back and choose a product.</p>
+        <a href="PET SHOP PROJECT.html" class="back-btn">← Back to Home</a>
+      `;
+    }
+  </script>
 
 </body>
 </html>

@@ -1,4 +1,6 @@
-// Modal Elements
+// =========================
+// 🔸 MODAL ELEMENTS
+// =========================
 let modal = document.getElementById('productModal');
 let modalTitle = document.getElementById('modalTitle');
 let modalPrice = document.getElementById('modalPrice');
@@ -8,12 +10,16 @@ let qtyDisplay = document.getElementById('qty');
 let currentProduct = {};
 let qty = 1;
 
-// Cart Sidebar Elements
+// =========================
+// 🔸 CART SIDEBAR ELEMENTS
+// =========================
 let cartPanel = document.getElementById('cartSidebar');
 let cartItems = document.getElementById('cartItems');
 let cartTotal = document.getElementById('cartTotal');
 
-// Open Product Modal
+// =========================
+// 🔸 OPEN PRODUCT MODAL
+// =========================
 function openProduct(name, price, img) {
   currentProduct = { name, price, img };
   modalTitle.textContent = name;
@@ -28,7 +34,9 @@ function openProduct(name, price, img) {
   modal.classList.add('show');
 }
 
-// Close Modal with animation
+// =========================
+// 🔸 CLOSE MODAL
+// =========================
 function closeModal() {
   modal.classList.remove('show');
   modal.classList.add('hide');
@@ -37,30 +45,35 @@ function closeModal() {
   }, 300);
 }
 
-// Update quantity in modal
+// =========================
+// 🔸 CHANGE QUANTITY IN MODAL
+// =========================
 function changeQty(amount) {
   qty = Math.max(1, qty + amount);
   qtyDisplay.textContent = qty;
 }
 
-// Add to Cart from Modal
+// =========================
+// 🔸 ADD TO CART (FROM MODAL)
+// =========================
 function addToCart() {
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  
-  // Check if product already in cart, increase qty instead of adding duplicate
+
   const existingIndex = cart.findIndex(item => item.name === currentProduct.name);
   if (existingIndex > -1) {
     cart[existingIndex].qty += qty;
   } else {
     cart.push({ ...currentProduct, qty });
   }
-  
+
   localStorage.setItem('cart', JSON.stringify(cart));
   closeModal();
   showCart();
 }
 
-// Add to Cart directly from card with qty = 1
+// =========================
+// 🔸 ADD TO CART DIRECTLY FROM CARD
+// =========================
 function addToCartDirect(name, price, img) {
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -75,7 +88,9 @@ function addToCartDirect(name, price, img) {
   showCart();
 }
 
-// Buy Now from Modal
+// =========================
+// 🔸 BUY NOW (FROM MODAL)
+// =========================
 function buyNow() {
   if (currentProduct && currentProduct.name) {
     localStorage.setItem('selectedProduct', JSON.stringify({
@@ -84,11 +99,17 @@ function buyNow() {
       image: currentProduct.img,
       qty: qty
     }));
+
+    // Clear any previous cart checkout
+    localStorage.removeItem('checkoutCart');
   }
+
   window.location.href = "checkout.html";
 }
 
-// Buy Now directly from product card
+// =========================
+// 🔸 BUY NOW (FROM CARD)
+// =========================
 function buyProduct(name, price, image) {
   localStorage.setItem('selectedProduct', JSON.stringify({
     name,
@@ -96,10 +117,17 @@ function buyProduct(name, price, image) {
     image,
     qty: 1
   }));
+
+  // Remove any previous full-cart checkout
+  localStorage.removeItem('checkoutCart');
+
+  // Redirect to checkout
   window.location.href = "checkout.html";
 }
 
-// Show Cart Sidebar and update UI
+// =========================
+// 🔸 SHOW CART SIDEBAR
+// =========================
 function showCart() {
   cartItems.innerHTML = '';
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -125,16 +153,24 @@ function showCart() {
     `;
   });
 
-  cartTotal.textContent = `Total: ₱${total.toFixed(2)}`;
+  cartTotal.innerHTML = `
+    <p>Total: ₱${total.toFixed(2)}</p>
+    <button class="checkout-btn" onclick="checkoutCart()">Checkout</button>
+  `;
+
   cartPanel.classList.add('active');
 }
 
-// Close Cart Sidebar
+// =========================
+// 🔸 CLOSE CART SIDEBAR
+// =========================
 function closeCart() {
   cartPanel.classList.remove('active');
 }
 
-// Remove item from cart by index
+// =========================
+// 🔸 REMOVE ITEM FROM CART
+// =========================
 function removeItem(index) {
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
   if (index > -1 && index < cart.length) {
@@ -144,7 +180,9 @@ function removeItem(index) {
   showCart();
 }
 
-// Change quantity of item in cart sidebar
+// =========================
+// 🔸 CHANGE CART ITEM QTY
+// =========================
 function changeCartQty(index, amount) {
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
   if (index > -1 && index < cart.length) {
@@ -154,13 +192,37 @@ function changeCartQty(index, amount) {
   }
 }
 
-// Like button toggle (no changes)
+// =========================
+// 🔸 LIKE BUTTON TOGGLE
+// =========================
 function toggleLike(el, event) {
   event.stopPropagation();
   el.classList.toggle("liked");
 }
 
-// Initialize cart UI on page load
+// =========================
+// 🔸 CHECKOUT ENTIRE CART
+// =========================
+function checkoutCart() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  // Save entire cart for checkout
+  localStorage.setItem('checkoutCart', JSON.stringify(cart));
+
+  // Remove any single selected product
+  localStorage.removeItem('selectedProduct');
+
+  // Redirect to checkout page
+  window.location.href = "checkout.html";
+}
+
+// =========================
+// 🔸 INITIALIZE CART ON PAGE LOAD
+// =========================
 document.addEventListener('DOMContentLoaded', () => {
   showCart();
 });
