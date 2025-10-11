@@ -30,11 +30,11 @@
 
 .modal.show {
   display: flex !important;
-  animation: modalShow 0.3s ease forwards;
+  animation: modalShow 0.35s ease-out forwards;
 }
 
 .modal.hide {
-  animation: modalHide 0.3s ease forwards;
+  animation: modalHide 0.3s ease-in forwards;
 }
 
 /* ✨ Cart panel (slide-up style) */
@@ -43,12 +43,12 @@
   bottom: -100%;
   left: 0;
   width: 100%;
-  background: white;
+  background: #fff;
   border-radius: 20px 20px 0 0;
-  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 25px rgba(0, 0, 0, 0.15);
   transition: bottom 0.4s ease;
   z-index: 1000;
-  padding: 20px;
+  padding: 25px;
 }
 
 .cart.show {
@@ -57,23 +57,26 @@
 
 .cart h3 {
   text-align: center;
-  color: #6c3bb6;
-  font-size: 20px;
+  color: #6c3bb6; /* Pet Culture purple */
+  font-size: 22px;
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom: 18px;
+  letter-spacing: 0.5px;
 }
 
 .cart-items {
   max-height: 250px;
   overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 .cart-item {
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 12px 0;
   border-bottom: 1px solid #eee;
   font-size: 15px;
+  color: #333;
 }
 
 .cart-total {
@@ -84,6 +87,30 @@
   margin-top: 15px;
 }
 
+/* 🛒 Checkout Button */
+#checkoutBtn {
+  display: block;
+  width: 100%;
+  background: linear-gradient(90deg, #f7931e, #ffae42);
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(247, 147, 30, 0.3);
+}
+
+#checkoutBtn:hover {
+  background: linear-gradient(90deg, #ffae42, #f7931e);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(247, 147, 30, 0.4);
+}
+
+/* 🔙 Back Button */
 .back-btn {
   display: block;
   width: 100%;
@@ -100,4 +127,29 @@
 
 .back-btn:hover {
   background: #777;
+}
+
+/* 🐾 Product Card Buttons */
+.product-card button {
+  background: linear-gradient(90deg, #f7931e, #ffae42);
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 25px;
+  padding: 8px 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(247, 147, 30, 0.3);
+}
+
+.product-card button:hover {
+  background: linear-gradient(90deg, #ffae42, #f7931e);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(247, 147, 30, 0.4);
+}
+
+.product-card button:focus {
+  outline: none;
 }

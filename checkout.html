@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Pet Culture</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .checkout-container {
+      display: flex;
+      width: 90%;
+      max-width: 1000px;
+      margin-top: 30px;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .checkout-left, .checkout-right {
+      padding: 20px;
+    }
+
+    .checkout-left {
+      flex: 2;
+      border-right: 1px solid #eee;
+      background: #fafafa;
+    }
+
+    .checkout-right {
+      flex: 1;
+      background: #fff;
+    }
+
+    h3 {
+      color: #333;
+      margin-top: 20px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .checkout-summary {
+      border: 1px solid #eee;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .checkout-summary img {
+      width: 70px;
+      border-radius: 5px;
+    }
+
+    .checkout-summary h4 {
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .checkout-summary p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .total {
+      font-weight: 700;
+      font-size: 18px;
+      text-align: right;
+      margin-top: 10px;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: #6a4caf;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .checkout-btn:hover {
+      background: #5a3da0;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 10px;
+      color: #6a4caf;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="checkout-container">
+    <!-- LEFT SIDE -->
+    <div class="checkout-left">
+      <h3>Contact</h3>
+      <label>Email or Mobile Phone Number</label>
+      <input type="text" placeholder="Enter your email or number">
+
+      <h3>Delivery</h3>
+      <label>Country/Region</label>
+      <select>
+        <option>Philippines</option>
+      </select>
+      <label>First Name</label>
+      <input type="text" placeholder="First Name">
+      <label>Last Name</label>
+      <input type="text" placeholder="Last Name">
+      <label>Address</label>
+      <input type="text" placeholder="Address">
+      <label>City</label>
+      <input type="text" placeholder="City">
+      <label>Postal Code</label>
+      <input type="text" placeholder="Postal Code">
+
+      <h3>Payment</h3>
+      <label><input type="radio" name="payment" checked> Bank Deposit</label><br>
+      <small>BPI Bank — Account Name: Signore Nuelle Reyes — 0990-010-145</small><br><br>
+      <label><input type="radio" name="payment"> E-wallet (GCash, PayMaya)</label><br>
+      <label><input type="radio" name="payment"> Money Remittance (LBC, Palawan, Cebuana)</label>
+
+      <button class="checkout-btn">Complete Order</button>
+      <a href="index.html" class="back-btn">← Back to Cart</a>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="checkout-right">
+      <div class="checkout-summary">
+        <h3>Your Order</h3>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+          <img src="product2.png" alt="Royal Canin Maxi Adult 10kg">
+          <div>
+            <h4>Royal Canin Maxi Adult 10kg</h4>
+            <p>₱2,950.00</p>
+          </div>
+        </div>
+        <hr>
+        <p>Subtotal: ₱2,950.00</p>
+        <p>Shipping: ₱150.00</p>
+        <div class="total">Total: ₱3,100.00</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

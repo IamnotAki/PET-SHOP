@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pet Culture</title>
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Poppins', sans-serif; background-color: #fff; }
@@ -47,7 +48,7 @@
     .product-card {
       border: 1px solid #eee; border-radius: 10px; text-align: center;
       padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      transition: 0.3s; cursor: pointer;
+      transition: 0.3s; cursor: pointer; position: relative;
     }
     .product-card:hover {
       transform: translateY(-5px); box-shadow: 0 5px 10px rgba(0,0,0,0.1);
@@ -56,7 +57,40 @@
     .product-card h3 { font-size: 16px; margin: 10px 0 5px; color: #333; }
     .product-card p { color: #6c3bb6; font-weight: 600; }
 
-    /* Product Modal */
+    /* Add to Cart Button */
+    .buy-btn {
+      background: linear-gradient(90deg, #f7931e, #ffae42);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 8px 15px;
+      margin-top: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 8px rgba(247, 147, 30, 0.3);
+    }
+    .buy-btn:hover {
+      background: linear-gradient(90deg, #ffae42, #f7931e);
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(247, 147, 30, 0.4);
+    }
+
+    /* ❤️ Like Button */
+    .like-btn {
+      position: absolute;
+      top: 10px; right: 10px;
+      font-size: 22px;
+      color: #ccc;
+      cursor: pointer;
+      transition: transform 0.2s, color 0.3s;
+    }
+    .like-btn.liked {
+      color: #ff4b5c;
+      transform: scale(1.2);
+    }
+
+    /* Modal */
     .modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 999;
@@ -76,18 +110,17 @@
       width: 30px; height: 30px; border: none; background: #6c3bb6;
       color: white; border-radius: 5px; cursor: pointer;
     }
-    .quantity-control span { font-size: 16px; }
+
     .modal-buttons button {
       margin-right: 10px; padding: 10px 15px; border: none; border-radius: 25px;
       color: white; cursor: pointer; transition: 0.3s;
     }
     .add-btn { background: #f7931e; }
-    .buy-btn { background: #6c3bb6; }
+    .buy-btn-modal { background: #6c3bb6; }
     .cancel-btn { background: #999; }
     .modal-buttons button:hover { opacity: 0.8; }
     .close {
-      position: absolute; top: 20px; right: 30px; font-size: 22px;
-      color: white; cursor: pointer;
+      position: absolute; top: 15px; right: 25px; font-size: 22px; color: #333; cursor: pointer;
     }
 
     /* Cart Sidebar */
@@ -99,15 +132,53 @@
     }
     #cartSidebar.active { right: 0; }
     #cartSidebar h3 { color: #6c3bb6; margin-bottom: 15px; }
-    #cartItems { flex: 1; overflow-y: auto; }
 
-    .cart-item {
-      display: flex; align-items: center; justify-content: space-between;
+    /* 🛒 Cart Items */
+    #cartItems {
+      flex: 1;
+      overflow-y: auto;
       margin-bottom: 10px;
     }
-    .cart-item img { width: 50px; height: 50px; object-fit: contain; }
-    .cart-item div { flex: 1; margin-left: 10px; }
 
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+    }
+
+    .cart-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
+
+    .cart-item div {
+      flex: 1;
+    }
+
+    .cart-item p {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 2px;
+    }
+
+    .cart-item small {
+      font-size: 13px;
+      color: #777;
+    }
+
+    .cart-item span {
+      font-size: 18px;
+      color: red;
+      cursor: pointer;
+    }
+
+    /* Cart Footer */
     #cartFooter {
       border-top: 1px solid #eee;
       padding-top: 10px;
@@ -133,9 +204,10 @@
       cursor: pointer;
       margin-bottom: 10px;
     }
-
     #backBtn { background: #999; }
-    #checkoutBtn { background: #6c3bb6; }
+    #checkoutBtn {
+      background: linear-gradient(90deg, #f7931e, #ffae42);
+    }
 
     /* Checkout Modal */
     #checkoutModal {
@@ -166,7 +238,6 @@
     <nav>
       <ul>
         <li><a href="#">Home</a></li>
-
         <li><a href="#">Shop</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#">Contact</a></li>
@@ -174,7 +245,7 @@
     </nav>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section class="hero">
     <h1>CREATING LIFE LONG BONDS WITH YOUR PET PALS</h1>
     <p>Delivering top quality pet supplies that prioritize your pet’s health and happiness.</p>
@@ -184,18 +255,24 @@
     </div>
   </section>
 
-  <!-- Product Section -->
+  <!-- Products -->
   <h2 class="section-title">🐶 Royal Canin Product Sale</h2>
+
   <div class="products">
     <div class="product-card" onclick="openProduct('Royal Canin Mini Adult 1.5kg', 810, 'product1.png')">
-      <img src="product1.png" alt="Product">
+      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
+      <img src="product1.png" alt="Royal Canin Mini Adult 1.5kg">
       <h3>Royal Canin Mini Adult 1.5kg</h3>
       <p>₱810.00</p>
+      <button class="buy-btn" onclick="event.stopPropagation(); addToCartDirect('Royal Canin Mini Adult 1.5kg', 810, 'product1.png')">Add to Cart</button>
     </div>
+
     <div class="product-card" onclick="openProduct('Royal Canin Maxi Adult 10kg', 2950, 'product2.png')">
-      <img src="product2.png" alt="Royal Canin Maxi Adult">
+      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
+      <img src="product2.png" alt="Royal Canin Maxi Adult 10kg">
       <h3>Royal Canin Maxi Adult 10kg</h3>
       <p>₱2,950.00</p>
+      <button class="buy-btn" onclick="event.stopPropagation(); addToCartDirect('Royal Canin Maxi Adult 10kg', 2950, 'product2.png')">Add to Cart</button>
     </div>
   </div>
 
@@ -214,7 +291,7 @@
         </div>
         <div class="modal-buttons">
           <button class="add-btn" onclick="addToCart()">Add to Cart</button>
-          <button class="buy-btn" onclick="buyNow()">Buy Now</button>
+          <button class="buy-btn-modal" onclick="buyNow()">Buy Now</button>
           <button class="cancel-btn" onclick="closeModal()">Cancel</button>
         </div>
       </div>
@@ -225,8 +302,6 @@
   <div id="cartSidebar">
     <h3>Your Cart</h3>
     <div id="cartItems"></div>
-
-    <!-- ✅ Sticky footer section -->
     <div id="cartFooter">
       <div id="cartTotal">Total: ₱0.00</div>
       <button id="backBtn" onclick="closeCart()">← Back</button>
@@ -286,6 +361,14 @@
       closeModal();
     }
 
+    function addToCartDirect(name, price, img) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push({ name, price, img, qty: 1 });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartSidebar();
+      cartSidebar.classList.add("active");
+    }
+
     function updateCartSidebar() {
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
       cartItems.innerHTML = '';
@@ -301,7 +384,7 @@
             <p>${item.name}</p>
             <small>₱${item.price} x ${item.qty}</small>
           </div>
-          <span style="cursor:pointer;color:red" onclick="removeItem('${item.name}')">✖</span>
+          <span onclick="removeItem('${item.name}')">✖</span>
         `;
         cartItems.appendChild(div);
       });
@@ -335,6 +418,11 @@
 
     function closeCart() {
       cartSidebar.classList.remove("active");
+    }
+
+    function toggleLike(el, event) {
+      event.stopPropagation();
+      el.classList.toggle("liked");
     }
 
     window.onclick = function(e) {
