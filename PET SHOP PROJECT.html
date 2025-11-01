@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🐾 FurHub</title>
+  <title>🐾 Animalandia</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Poppins', sans-serif; background-color: #fff; }
@@ -19,6 +19,8 @@
     nav ul { list-style: none; display: flex; gap: 25px; }
     nav ul li a { text-decoration: none; color: #333; font-weight: 500; transition: color 0.3s; }
     nav ul li a:hover { color: #6c3bb6; }
+    nav ul li#userDisplay { cursor: pointer; }
+    nav ul li#userDisplay:hover { color: #6c3bb6; }
 
     .hero {
       background-color: #6c3bb6; color: white; text-align: center; padding: 80px 20px;
@@ -179,13 +181,14 @@
 </head>
 <body>
   <header>
-    <div class="logo"><a href="PET SHOP PROJECT.html">🐾 FurHub</a></div>
+    <div class="logo"><a href="PET SHOP PROJECT.html">🐾Animalandia</a></div>
     <nav>
       <ul>
         <li><a href="PET SHOP PROJECT.html">Home</a></li>
         <li><a href="#">Shop</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#">Contact</a></li>
+        <li id="userDisplay"><a href="Login.html">Login</a></li>
       </ul>
     </nav>
   </header>
@@ -506,6 +509,24 @@
         product.style.display = title.includes(input) ? "block" : "none";
       });
     }
+
+    // Para sa Login natin - Arquel
+    function checkLoginStatus() {
+      const user = JSON.parse(localStorage.getItem('loggedInUser'));
+      const userDisplay = document.getElementById('userDisplay');
+      if (user) {
+        userDisplay.innerHTML = `<span>Welcome, ${user.name}</span>`;
+        userDisplay.addEventListener('click', function() {
+          if (confirm('Logout?')) {
+            localStorage.removeItem('loggedInUser');
+            location.reload();
+          }
+        });
+      } else {
+        userDisplay.innerHTML = '<a href="Login.html">Login</a>';
+      }
+    }
+    checkLoginStatus();
   </script>
 </body>
 </html>

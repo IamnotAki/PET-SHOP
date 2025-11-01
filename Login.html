@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - FurHub</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #6c3bb6, #f7931e);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #6c3bb6;
+            margin-bottom: 20px;
+        }
+        .logo a { text-decoration: none; color: #6c3bb6; }
+        h2 {
+            margin-bottom: 20px;
+            color: #6c3bb6;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input[type="email"]:focus, input[type="password"]:focus {
+            border-color: #6c3bb6;
+            outline: none;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, #f7931e, #ffae42);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(247, 147, 30, 0.3);
+        }
+        .login-btn:hover {
+            background: linear-gradient(90deg, #ffae42, #f7931e);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(247, 147, 30, 0.4);
+        }
+        .links {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .links a {
+            color: #6c3bb6;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .links a:hover { text-decoration: underline; }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-link:hover { color: #6c3bb6; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo"><a href="PET SHOP PROJECT.html">🐾 FurHub</a></div>
+        <h2>Login to Your Account</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+        <div class="links">
+            <a href="#">Forgot Password?</a>
+            <a href="signup.html">Sign Up</a>
+        </div>
+        <a href="PET SHOP PROJECT.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            // Simulate login (replace with actual authentication logic)
+            if (email && password) {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const user = users.find(u => u.email === email && u.password === password);
+                if (user) {
+                    // Store logged in user info
+                    localStorage.setItem('loggedInUser', JSON.stringify({ email: user.email, name: user.name }));
+                    alert('Login successful! Redirecting...');
+                    window.location.href = 'PET SHOP PROJECT.html';
+                } else {
+                    alert('Invalid email or password.');
+                }
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+    </script>
+</body>
+</html>
