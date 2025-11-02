@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - FurHub</title>
+    <title>Login - Animalandia</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -94,10 +94,10 @@
         }
         .back-link:hover { color: #6c3bb6; }
     </style>
-</head>
+</head> 
 <body>
     <div class="login-container">
-        <div class="logo"><a href="PET SHOP PROJECT.html">🐾 FurHub</a></div>
+        <div class="logo"><a href="PET SHOP PROJECT.html">🐾 Animalandia</a></div>
         <h2>Login to Your Account</h2>
         <form id="loginForm">
             <div class="form-group">
@@ -122,7 +122,7 @@
             event.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            // Simulate login (replace with actual authentication logic)
+            // Pag lologin 
             if (email && password) {
                 const users = JSON.parse(localStorage.getItem('users')) || [];
                 const user = users.find(u => u.email === email && u.password === password);
