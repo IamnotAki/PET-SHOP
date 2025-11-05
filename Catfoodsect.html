@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🐾 Animalandia</title> 
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+  <title>Dog Food | Animalandia</title>
+  <link rel="stylesheet" href="animation.css">
+</head>
+<body>
+    <style>
+         * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Poppins', sans-serif; background-color: #fff; }
 
     header {
@@ -177,9 +180,7 @@
       transition: 0.3s;
     }
     .back-btn:hover { background: #777; }
-  </style>
-</head>
-<body>
+    </style>
   <header>
     <div class="logo"><a href="PET SHOP PROJECT.html">🐾Animalandia</a></div>
     <nav>
@@ -189,72 +190,17 @@
         <li><a href="#">About</a></li>
         <li><a href="#">Contact</a></li>
         <li id="userDisplay"><a href="Login.html">Login</a></li>
-        <li id="adminLink" style="display:none;"><a href="admin.html">Admin Panel</a></li>
       </ul>
     </nav>
   </header>
 
   <section class="hero">
-    <h1>CREATING LIFE LONG BONDS WITH YOUR PET PALS</h1>
-    <p>Delivering top-quality pet supplies that prioritize your pet’s health and happiness.</p>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search" />
-      <button id="searchBtn">Find a Product</button>
-    </div>
+    <h1>Premium Dog Food</h1>
+    <p>Wholesome nutrition for every breed and every stage.</p>
   </section>
 
-  <h2 class="section-title">🐶 Royal Canin Product Sale 🐱</h2>
-
-  <div id="productList" class="products">
-     <!-- Product 1 -->
-    <div class="product-card" onclick="openProduct('Royal Canin Mini Adult 1.5kg', 810, 'product1.png')">
-      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
-      <img src="product1.png" alt="Royal Canin Mini Adult 1.5kg">
-      <h3>Royal Canin Mini Adult 1.5kg</h3>
-      <p>₱810.00</p>
-      <div class="product-actions">
-        <button class="buy-btn buy">Buy Now</button>
-        <button class="buy-btn add">Add to Cart</button>
-      </div>
-    </div>
-
-    <!-- Product 2 -->
-    <div class="product-card" onclick="openProduct('Royal Canin Maxi Adult 10kg', 2950, 'product2.png')">
-      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
-      <img src="product2.png" alt="Royal Canin Maxi Adult 10kg">
-      <h3>Royal Canin Maxi Adult 10kg</h3>
-      <p>₱2,950.00</p>
-      <div class="product-actions">
-        <button class="buy-btn buy">Buy Now</button>
-        <button class="buy-btn add">Add to Cart</button>
-      </div>
-    </div>
-
-    <!-- Product 3 -->
-    <div class="product-card" onclick="openProduct('Royal Canin Shih Tzu Adult 1.5kg', 855, 'product3.png')">
-      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
-      <img src="product3.png" alt="Royal Canin Shih Tzu Adult 1.5kg">
-      <h3>Royal Canin Shih Tzu Adult 1.5kg</h3>
-      <p>₱855.00</p>
-      <div class="product-actions">
-        <button class="buy-btn buy">Buy Now</button>
-        <button class="buy-btn add">Add to Cart</button>
-      </div>
-    </div>
-
-    <!-- Product 4 -->
-    <div class="product-card" onclick="openProduct('Royal Canin Medium Adult 4kg', 1434, 'product4.png')">
-      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
-      <img src="product4.png" alt="Royal Canin Medium Adult 4kg">
-      <h3>Royal Canin Medium Adult 4kg</h3>
-      <p>₱1,434.00</p>
-      <div class="product-actions">
-        <button class="buy-btn buy">Buy Now</button>
-        <button class="buy-btn add">Add to Cart</button>
-      </div>
-    </div>
-
-    <!-- Product 5 -->
+  <h2 class="section-title">🐱 Cat Food Products 🐱</h2>
+  <div class="products">
     <div class="product-card" onclick="openProduct('Royal Canin Urinary 2kg', 1190, 'product5.png')">
       <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
       <img src="product5.png" alt="Royal Canin Urinary 2kg">
@@ -265,8 +211,6 @@
         <button class="buy-btn add">Add to Cart</button>
       </div>
     </div>
-
-    <!-- Product 6 -->
     <div class="product-card" onclick="openProduct('Royal Canin Hairball Care 2kg', 1250, 'product6.png')">
       <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
       <img src="product6.png" alt="Royal Canin Hairball Care 2kg">
@@ -277,8 +221,6 @@
         <button class="buy-btn add">Add to Cart</button>
       </div>
     </div>
-
-    <!-- Product 7 -->
     <div class="product-card" onclick="openProduct('Royal Canin Kitten 4kg', 2250, 'product7.png')">
       <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
       <img src="product7.png" alt="Royal Canin Kitten 4kg">
@@ -289,80 +231,6 @@
         <button class="buy-btn add">Add to Cart</button>
       </div>
     </div>
-
-    <!-- Product 8 -->
-    <div class="product-card" onclick="openProduct('Royal Canin Indoor Adult 2kg', 1150, 'product8.png')">
-      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
-      <img src="product8.png" alt="Royal Canin Indoor Adult 2kg">
-      <h3>Royal Canin Indoor Adult 2kg</h3>
-      <p>₱1,150.00</p>
-      <div class="product-actions">
-        <button class="buy-btn buy">Buy Now</button>
-        <button class="buy-btn add">Add to Cart</button>
-      </div>
-    </div>
-
-    <!-- Product 9 -->
-    <div class="product-card" onclick="openProduct('Royal Canin Mini Puppy 1.5kg', 860, 'product9.png')">
-      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
-      <img src="product9.png" alt="Royal Canin Mini Puppy 1.5kg">
-      <h3>Royal Canin Mini Puppy 1.5kg</h3>
-      <p>₱860.00</p>
-      <div class="product-actions">
-        <button class="buy-btn buy">Buy Now</button>
-        <button class="buy-btn add">Add to Cart</button>
-      </div>
-    </div>
-
-    <!-- Product 10 -->
-    <div class="product-card" onclick="openProduct('Royal Canin Persian Adult 2kg', 1450, 'product10.png')">
-      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
-      <img src="product10.png" alt="Royal Canin Persian Adult 2kg">
-      <h3>Royal Canin Persian Adult 2kg</h3>
-      <p>₱1,450.00</p>
-      <div class="product-actions">
-        <button class="buy-btn buy">Buy Now</button>
-        <button class="buy-btn add">Add to Cart</button>
-      </div>
-    </div>
-
-    <!-- Product 11 -->
-    <div class="product-card" onclick="openProduct('Orijen Senior Dry Dog Food 2kg', 1515, 'product11.png')">
-      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
-      <img src="product11.png" alt="Orijen Senior Dry Dog Food 2kg">
-      <h3>Orijen Senior Dry Dog Food 2kg</h3>
-      <p>₱1,515.00</p>
-      <div class="product-actions">
-        <button class="buy-btn buy">Buy Now</button>
-        <button class="buy-btn add">Add to Cart</button>
-      </div>
-    </div>
-
-    <!-- Product 12 -->
-    <div class="product-card" onclick="openProduct('Acana Grass-Fed Lamb For Dogs All Life Stages 17kg', 5955, 'product12.png')">
-      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
-      <img src="product12.png" alt="Acana Grass-Fed Lamb For Dogs All Life Stages 17kg">
-      <h3>Acana Grass-Fed Lamb For Dogs All Life Stages 17kg</h3>
-      <p>₱5,955.00</p>
-      <div class="product-actions">
-        <button class="buy-btn buy">Buy Now</button>
-        <button class="buy-btn add">Add to Cart</button>
-      </div>
-    </div>
-
-    <!-- Product 13 -->
-    <div class="product-card" onclick="openProduct('Nutri Chunks Hi-Protein Puppy Lamb 1.3kg', 5955, 'product13.png')">
-      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
-      <img src="product13.png" alt="Nutri Chunks Hi-Protein Puppy Lamb 1.3kg">
-      <h3>Nutri Chunks Hi-Protein Puppy Lamb 1.3kg</h3>
-      <p>₱345.00</p>
-      <div class="product-actions">
-        <button class="buy-btn buy">Buy Now</button>
-        <button class="buy-btn add">Add to Cart</button>
-      </div>
-    </div>
-
-    <!-- Product 14 -->
     <div class="product-card" onclick="openProduct('Nutricare Cat Dry Food For All Stages Tuna, Marine Fish, Tuna and Sardines (500g Repacked)', 5955, 'product14.png')">
       <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
       <img src="product14.png" alt="Nutricare Cat Dry Food For All Stages Tuna, Marine Fish, Tuna and Sardines (500g Repacked)">
@@ -374,64 +242,6 @@
       </div>
     </div>
   </div>
-
-  <hr style="border: none; height: 2px; background-color: #6c3bb6; margin: 40px 40px;">
-
-  <!-- shops category -->
-  <h2 class="Category-shop">🐾 Shop by Category 🐾</h2>
-<div class="category-grid">
-  <a href="Dogfoodsect.html" class="category-card">
-    <img src="Dogfood.png" alt="Dog Food">
-    <h3>Dog Food</h3>
-  </a>
-  <a href="Catfoodsect.html" class="category-card">
-    <img src="Catfood.jpg" alt="Cat Food">
-    <h3>Cat Food</h3>
-  </a>
-  <a href="accessories.html" class="category-card">
-    <img src="Accesories.jpg" alt="Accessories">
-    <h3>Accessories</h3>
-  </a>
-  <a href="healthsupplies.html" class="category-card">
-    <img src="Health.png" alt="Health Supplies">
-    <h3>Health Supplies</h3>
-  </a>
-</div>
-<link rel="stylesheet" href="Sections.css">
-
-  <!-- Modal -->
-  <div class="modal" id="productModal">
-    <div class="close" onclick="closeModal()">✖</div>
-    <div class="modal-content">
-      <img id="modalImg" src="" alt="">
-      <div class="details">
-        <h2 id="modalTitle"></h2>
-        <p id="modalPrice"></p>
-        <div class="quantity-control">
-          <button onclick="changeQty(-1)">−</button>
-          <span id="qty">1</span>
-          <button onclick="changeQty(1)">+</button>
-        </div>
-        <div class="modal-buttons">
-          <button class="add-btn" onclick="addToCart()">Add to Cart</button>
-          <button class="buy-btn-modal" onclick="buyNow()">Buy Now</button>
-          <button class="cancel-btn" onclick="closeModal()">Cancel</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Cart Sidebar -->
-  <div id="cartSidebar">
-    <h3>Your Cart</h3>
-    <div id="cartItems"></div>
-    <div id="cartFooter">
-      <div id="cartTotal">Total: ₱0.00</div>
-      <button class="back-btn" onclick="closeCart()">← Back</button>
-      <a href="checkout.html" id="checkoutBtn">Check Out</a>
-    </div>
-  </div>
-
   <script>
     let modal = document.getElementById('productModal');
     let modalTitle = document.getElementById('modalTitle');
@@ -522,21 +332,6 @@
     }
     updateCartSidebar();
 
-    // ✅ Search Function
-    document.getElementById("searchBtn").addEventListener("click", searchProduct);
-    document.getElementById("searchInput").addEventListener("keyup", function(event) {
-      if (event.key === "Enter") searchProduct();
-    });
-
-    function searchProduct() {
-      const input = document.getElementById("searchInput").value.toLowerCase();
-      const products = document.querySelectorAll("#productList .product-card");
-      products.forEach(product => {
-        const title = product.querySelector("h3").innerText.toLowerCase();
-        product.style.display = title.includes(input) ? "block" : "none";
-      });
-    }
-
     // Para sa Login natin - Arquel
     function checkLoginStatus() {
       const user = JSON.parse(localStorage.getItem('loggedInUser'));
@@ -578,4 +373,3 @@
   </script>
 </body>
 </html>
-
