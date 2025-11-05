@@ -189,6 +189,7 @@
         <li><a href="#">About</a></li>
         <li><a href="#">Contact</a></li>
         <li id="userDisplay"><a href="Login.html">Login</a></li>
+        <li id="adminLink" style="display:none;"><a href="admin.html">Admin Panel</a></li>
       </ul>
     </nav>
   </header>
@@ -372,10 +373,14 @@
         <button class="buy-btn add">Add to Cart</button>
       </div>
     </div>
-<!-- shops category -->
-<h2 class="Category-shop">🐾 Shop by Category 🐾</h2>
+  </div>
+
+  <hr style="border: none; height: 2px; background-color: #6c3bb6; margin: 40px 40px;">
+
+  <!-- shops category -->
+  <h2 class="Category-shop">🐾 Shop by Category 🐾</h2>
 <div class="category-grid">
-  <a href="dogfood.html" class="category-card">
+  <a href="Dogfoodsect.html" class="category-card">
     <img src="Dogfood.png" alt="Dog Food">
     <h3>Dog Food</h3>
   </a>
@@ -549,6 +554,27 @@
       }
     }
     checkLoginStatus();
+
+    function checkLoginStatus() {
+  const user = JSON.parse(localStorage.getItem('loggedInUser'));
+  const userDisplay = document.getElementById('userDisplay');
+  const adminLink = document.getElementById('adminLink');
+  
+  if (user) {
+    userDisplay.innerHTML = `<span>Welcome, ${user.name}</span>`;
+    if (user.email === 'admin@animalandia.com') {
+      adminLink.style.display = 'block';
+    }
+    userDisplay.addEventListener('click', function() {
+      if (confirm('Logout?')) {
+        localStorage.removeItem('loggedInUser');
+        location.reload();
+      }
+    });
+  } else {
+    userDisplay.innerHTML = '<a href="Login.html">Login</a>';
+  }
+}
   </script>
 </body>
 </html>

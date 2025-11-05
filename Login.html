@@ -124,14 +124,25 @@
             const password = document.getElementById('password').value;
             // Pag lologin 
             if (email && password) {
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                const user = users.find(u => u.email === email && u.password === password);
+                let users = JSON.parse(localStorage.getItem('users')) || [];
+
+                // ✅ Add a default admin if none exists
+                const hasAdmin = users.some(u => u.email === 'admin@animalandia.com');
+                if (!hasAdmin) {
+                    users.push({ email: 'admin@animalandia.com', password: 'Admin123', name: 'Admin' });
+                    localStorage.setItem('users', JSON.stringify(users));}
+                // Now check login
+                    const user = users.find(u => u.email === email && u.password === password);
                 if (user) {
-                    // Store logged in user info
-                    localStorage.setItem('loggedInUser', JSON.stringify({ email: user.email, name: user.name }));
-                    alert('Login successful! Redirecting...');
-                    window.location.href = 'PET SHOP PROJECT.html';
-                } else {
+                localStorage.setItem('loggedInUser', JSON.stringify({ email: user.email, name: user.name }));
+                alert('Login successful! Redirecting...');        
+                    if (user.email === 'admin@animalandia.com')  {
+                    window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'PET SHOP PROJECT.html';
+                    }
+                }
+                else {
                     alert('Invalid email or password.');
                 }
             } else {

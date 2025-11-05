@@ -1,9 +1,10 @@
 .category-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
   padding: 0 40px 80px;
   text-align: center;
+  margin-top: 40px;
 }
 
 .category-card {
@@ -21,6 +22,11 @@
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   position: relative;
   margin: 0 auto;
+}
+
+.category-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
 }
 
 .category-card img {
