@@ -125,7 +125,6 @@
             // Pag lologin 
             if (email && password) {
                 let users = JSON.parse(localStorage.getItem('users')) || [];
-
                 // ✅ Add a default admin if none exists
                 const hasAdmin = users.some(u => u.email === 'admin@animalandia.com');
                 if (!hasAdmin) {
