@@ -173,13 +173,36 @@
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(247, 147, 30, 0.4);
     }
-    .back-btn {
-      display: block; width: 100%; background: #999; color: white;
-      padding: 10px; border-radius: 10px; text-align: center;
-      font-weight: 500; margin-top: 10px; cursor: pointer;
-      transition: 0.3s;
-    }
-    .back-btn:hover { background: #777; }
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #8c58de, #5b3cbc, #9505db);
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(149, 5, 219, 0.3);
+  transition: all 0.3s ease;
+  padding: 12px 25px;
+  margin: 40px auto 60px;
+  display: block;
+  width: fit-content;
+}
+.back-btn:hover {
+  background: linear-gradient(90deg, #5b3cbc, #8c58de, #b26fff);
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(149, 5, 219, 0.4);
+}
+.back-btn::before {
+  content: "←";
+  font-size: 18px;
+}
     </style>
   <header>
     <div class="logo"><a href="PET SHOP PROJECT.html">🐾Animalandia</a></div>
@@ -301,6 +324,12 @@
         <button class="buy-btn add">Add to Cart</button>
       </div>
     </div>
+
+   </div> <!-- end of .products -->
+
+<a href="PET SHOP PROJECT.html" class="back-btn">Back to Home</a>
+
+
      <div class="modal" id="productModal">
     <div class="close" onclick="closeModal()">✖</div>
     <div class="modal-content">
