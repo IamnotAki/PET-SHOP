@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Landing Page</title>
+  <style>
+    body { font-family: Arial; margin:0; padding:0; background:#f4f4f4; }
+    .header { background:#2563eb; color:#fff; padding:15px; text-align:center; font-size:22px; }
+    .content { padding:30px; text-align:center; }
+    .logout-btn { padding:10px 20px; background:red; border:0; color:#fff; border-radius:6px; cursor:pointer; }
+    .card{
+      max-width:400px; margin:40px auto; padding:20px; background:#fff; border-radius:10px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">Welcome</div>
+
+<div class="card">
+  <h2 id="welcomeText"></h2>
+  <p id="roleText"></p>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<script>
+  // Get saved login data
+  let username = localStorage.getItem("username");
+  let role = localStorage.getItem("role"); // "admin" or "user"
+
+  if (!username || !role) {
+    window.location.href = "index.html"; // redirect to login page
+  }
+
+  document.getElementById("welcomeText").innerText = "Hello, " + username + "!";
+  
+  // Show role message
+  if (role === "admin") {
+    document.getElementById("roleText").innerText = "You are logged in as: ADMIN";
+  } else {
+    document.getElementById("roleText").innerText = "You are logged in as: USER";
+  }
+
+  function logout() {
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
+    localStorage.removeItem("role");
+    window.location.href = "index.html";
+  }
+</script>
+
+</body>
+</html>

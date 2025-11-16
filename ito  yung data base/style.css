@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: #e8eefc;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+}
+
+.form-box {
+    background: #fff;
+    padding: 35px;
+    margin-bottom: 25px;
+    border-radius: 18px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    display: none;
+}
+.form-box.active{
+    display: block;
+}   
+
+h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+input:focus, select:focus {
+    border-color: #6c8bff;
+    outline: none;
+}
+
+.btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    background: #6c8bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #5575ff;
+}
+
+.link-text {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.link-text a {
+    color: #5575ff;
+    font-weight: 600;
+    text-decoration: none;
+}
+.error-message {
+    padding: 12px;
+    background: #f8d7da;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #a42834;
+    text-align: center;
+    margin-bottom: 20px;
+}
+h1 {
+    font-size: 50px;
+}
+
+span {
+    color: #7494ec;
+}
+
+.box p {
+    font-size: 22px;
+}
+
+.box button {
+    display: block;
+    width: 300px;
+    margin: 0 auto;
+}
