@@ -18,6 +18,37 @@ let cartItems = document.getElementById('cartItems');
 let cartTotal = document.getElementById('cartTotal');
 
 // =========================
+// 🔸 DYNAMIC PRODUCT LOADING
+// =========================
+async function loadProducts() {
+  try {
+    const response = await fetch('products.json'); // your API or JSON file
+    const products = await response.json();
+
+    const container = document.getElementById('products-container');
+    container.innerHTML = '';
+
+    products.forEach(product => {
+      const card = document.createElement('div');
+      card.classList.add('product-card');
+
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" onclick="openProduct('${product.name}', ${product.price}, '${product.image}')">
+        <h3>${product.name}</h3>
+        <p>₱${product.price.toFixed(2)}</p>
+        <button onclick="addToCartDirect('${product.name}', ${product.price}, '${product.image}')">Add to Cart</button>
+        <button onclick="buyProduct('${product.name}', ${product.price}, '${product.image}')">Buy Now</button>
+        <span class="like-btn" onclick="toggleLike(this, event)">❤️</span>
+      `;
+
+      container.appendChild(card);
+    });
+  } catch (error) {
+    console.error("Error loading products:", error);
+  }
+}
+
+// =========================
 // 🔸 OPEN PRODUCT MODAL
 // =========================
 function openProduct(name, price, img) {
@@ -100,7 +131,6 @@ function buyNow() {
       qty: qty
     }));
 
-    // Remove other cart-based checkouts
     localStorage.removeItem('checkoutCart');
   }
 
@@ -111,18 +141,14 @@ function buyNow() {
 // 🔸 BUY NOW (FROM CARD)
 // =========================
 function buyProduct(name, price, img) {
-  // ✅ FIXED: correctly store the selected product data
   localStorage.setItem('selectedProduct', JSON.stringify({
     name: name,
     price: price,
-    image: img,  // consistent with checkout.html variable
+    image: img,
     qty: 1
   }));
 
-  // Remove any previous full-cart checkout
   localStorage.removeItem('checkoutCart');
-
-  // Redirect to checkout
   window.location.href = "checkout.html";
 }
 
@@ -211,19 +237,15 @@ function checkoutCart() {
     return;
   }
 
-  // Save the entire cart for checkout
   localStorage.setItem('checkoutCart', JSON.stringify(cart));
-
-  // Remove any single selected product
   localStorage.removeItem('selectedProduct');
-
-  // Redirect to checkout page
   window.location.href = "checkout.html";
 }
 
 // =========================
-// 🔸 INITIALIZE CART ON PAGE LOAD
+// 🔸 INITIALIZE CART & PRODUCTS ON PAGE LOAD
 // =========================
 document.addEventListener('DOMContentLoaded', () => {
   showCart();
+  loadProducts(); // ✅ Load products dynamically
 });
