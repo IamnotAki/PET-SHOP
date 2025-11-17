@@ -5,8 +5,7 @@
     "name": "Royal Canin Urinary",
     "price": 1190,
     "img": "Products/product5.png",
-    "stock": true,
-    "desc": "Iconic diver watch, 40mm Oystersteel case, unidirectional bezel."
+    "stock": true
   },
   {
     "id": "CF-2",
@@ -14,8 +13,7 @@
     "name": "Royal Canin Hairball Care",
     "price": 1250,
     "img": "Products/product6.png",
-    "stock": true,
-    "desc": "Legendary racing chronograph with Cerachrom bezel and Oyster bracelet."
+    "stock": true
   },
   {
     "id": "CF-3",
@@ -23,8 +21,7 @@
     "name": "Royal Canin Kitten",
     "price": 2250,
     "img": "product7.png",
-    "stock": true,
-    "desc": "Timeless Datejust in steel with fluted bezel and jubilee bracelet."
+    "stock": true
   },
   {
     "id": "CF-4",
@@ -32,8 +29,7 @@
     "name": "Nutricare Cat Dry Food For All Stages",
     "price": 1250,
     "img": "Products/product5.png14",
-    "stock": true,
-    "desc": "Dual time zone travel watch — iconic \"Pepsi\" bezel."
+    "stock": true
   },
   {
     "id": "CF-5",
@@ -41,6 +37,350 @@
     "name": "Royal Canin Maxi Adult",
     "price": 2595,
     "img": "Products/product2.png",
+    "stock": true
+  },
+  {
+    "id": "DF-1",
+    "brand": "Royal Canid",
+    "name": "Royal Canin Mini Adult 1.5kg",
+    "price": 810,
+    "img": "Products/product1.png",
+    "stock": true
+  },
+  {
+    "id": "DF-2",
+    "brand": "Royal Canid",
+    "name": "Royal Canin Maxi Adult 10kg",
+    "price": 2950,
+    "img": "Products/product2.png",
+    "stock": true
+  },
+  {
+    "id": "DF-3",
+    "brand": "Royal Canid",
+    "name": "Royal Canin Shih Tzu Adult 1.5kg",
+    "price": 855,
+    "img": "Products/product3.png",
+    "stock": true
+  },
+  {
+    "id": "DF-4",
+    "brand": "Royal Canid",
+    "name": "Royal Canin Medium Adult 4kg",
+    "price": 1434,
+    "img": "Products/product4.png",
+    "stock": true
+  },
+  {
+    "id": "DF-5",
+    "brand": "Royal Canid",
+    "name": "Royal Canin Indoor Adult 2kg",
+    "price": 1150,
+    "img": "Products/product8.png",
+    "stock": true
+  },
+  {
+    "id": "DF-6",
+    "brand": "Royal Canid",
+    "name": "Royal Canin Mini Puppy 1.5kg",
+    "price": 860,
+    "img": "Products/product9.png",
+    "stock": true
+  },
+  {
+    "id": "DF-7",
+    "brand": "Royal Canid",
+    "name": "Royal Canin Persian Adult 2kg",
+    "price": 1450,
+    "img": "Products/product10.png",
+    "stock": true
+  },
+  {
+    "id": "DF-8",
+    "brand": "Orijen",
+    "name": "Orijen Senior Dry Dog Food 2kg",
+    "price": 1515,
+    "img": "Products/product11.png",
+    "stock": true
+  },
+  {
+    "id": "DF-9",
+    "brand": "Acana",
+    "name": "Acana Grass-Fed Lamb For Dogs All Life Stages 17kg",
+    "price": 5955,
+    "img": "Products/product12.png",
+    "stock": true
+  },
+  {
+    "id": "DF-10",
+    "brand": "Nutri Chunks",
+    "name": "Nutri Chunks Hi-Protein Puppy Lamb 1.3kg",
+    "price": 345,
+    "img": "Products/product13.png",
+    "stock": true
+  },
+  {
+    "id": "AC-1",
+    "brand": "Pet express",
+    "name": "Dog Chest Harness With Leash Pet Reflective Vest Leash Adjustable For Puppy Cat Shitzu",
+    "price": 99,
+    "img": "Accesories/Accesories 1.png",
+    "stock": true
+  },
+  {
+    "id": "AC-2",
+    "brand": "Pet express",
+    "name": "Pet Collar",
+    "price": 50,
+    "img": "Accesories/Accesories 2.png",
+    "stock": true
+  },
+  {
+    "id": "AC-3",
+    "brand": "Pet express",
+    "name": "36 Inch Large Dog Crate Dog Kennel Indoor Outdoor",
+    "price": 1580,
+    "img": "Accesories/Cage 1.jpg",
+    "stock": true
+  },
+  {
+    "id": "AC-4",
+    "brand": "Bentonite",
+    "name": "【10KG】Bentonite cat litter Cat Litter Sand deodorized cat litter",
+    "price": 300,
+    "img": "Accesories/Cat Litter.png",
+    "stock": true
+  },
+  {
+    "id": "AC-5",
+    "brand": "PetZone",
+    "name": "Interactive Cat Scratching Post Tower with Jute, Ball Track - Durable Multi-Functional Self-Entertainment Cat Scratch Post",
+    "price": 810,
+    "img": "Accesories/Cat toy 1.png",
+    "stock": true
+  },
+  {
+    "id": "AC-6",
+    "brand": "Feline Fun",
+    "name": "Cat Toys Interactive Cat Automatic Rolling Ball Electric Toys for Cat Dog USB Training Imitate Mouse",
+    "price": 110,
+    "img": "Accesories/Cat toy 2.png",
+    "stock": true
+  },
+  {
+    "id": "AC-7",
+    "brand": "Birdie Toys",
+    "name": "Interactive Cat Toy Set with Realistic Bird Design, Long Pole Double Rods, Bell, Strong Suction Cup, and Artificial Feat",
+    "price": 200,
+    "img": "Accesories/Cat toy 3.png",
+    "stock": true
+  },
+  {
+    "id": "AC-8",
+    "brand": "Animalandia",
+    "name": "10/12pcs Absorbent Dog Diapers for Small to Medium Breeds - Breathable, Leak-Proof, No-Seep Design for Male And Female",
+    "price": 218,
+    "img": "Accesories/Diaper 1.png",
+    "stock": true
+  },
+  {
+    "id": "AC-9",
+    "brand": "Honeycare",
+    "name": "Honeycare Male or Female Both Use Pet Diaper Dog Diaper Cat Diaper Pet Pant Underware Pet Pants",
+    "price": 160,
+    "img": "Accesories/DIaper 2.png",
+    "stock": true
+  },
+  {
+    "id": "AC-10",
+    "brand": "Animalandia",
+    "name": "Pet Dress Dog Cat Princess Skirt With Cute Bowknot Dog Floral Print Dress Summer Puppy Clothes",
+    "price": 95,
+    "img": "Accesories/Dog Dress.png",
+    "stock": true
+  },
+  {
+    "id": "AC-11",
+    "brand": "Animalandia",
+    "name": "Dog Shoes",
+    "price": 190,
+    "img": "Accesories/Dog Shoes.png",
+    "stock": true
+  },
+  {
+    "id": "AC-12",
+    "brand": "PawPlay",
+    "name": "Random Various Puppy Dog Toys for Teething, Entertainment & Interaction, Puppy Chew Toys Pack",
+    "price": 112,
+    "img": "Accesories/Dog Toy 1.png",
+    "stock": true
+  },
+  {
+    "id": "AC-13",
+    "brand": "RopeMaster",
+    "name": "Dog toys Dogs Chew Teeth Clean toys Grinding Teeth Playing Cotton Rope Ball Puppy toys",
+    "price": 75,
+    "img": "Accesories/Dog toy 2.png",
+    "stock": true
+  },
+  {
+    "id": "AC-14",
+    "brand": "BiteGuard",
+    "name": "Teeth Grinding Easy to Clean Dogs Toy TOYS Pet Accessories Essential Bite Resistant 24/7 Pet Shop",
+    "price": 60,
+    "img": "Accesories/Dog toy 3.png",
+    "stock": true
+  },
+  {
+    "id": "AC-15",
+    "brand": "BoneBite",
+    "name": "Realistic Bone Dog Chew Toy with Wooden Chew Beads & PP Material - Durable, Anti-Bite Design",
+    "price": 119,
+    "img": "Accesories/Dog Toy 4.png",
+    "stock": true
+  },
+  {
+    "id": "AC-16",
+    "brand": "Animalandia",
+    "name": "Pet Elizabeth Cone E-Collar Cat Dog Safety Collar Circle Pet Head Cover Bite Anti",
+    "price": 90,
+    "img": "Accesories/Elizabeth collar.jpg",
+    "stock": true
+  },
+  {
+    "id": "AC-17",
+    "brand": "Animalandia",
+    "name": "Winter Plush Warm Nest, for Small Medium Large Cats & Dogs",
+    "price": 300,
+    "img": "Accesories/pet bed 1.png",
+    "stock": true
+  },
+  {
+    "id": "AC-18",
+    "brand": "KEMORELA",
+    "name": "KEMORELA Bear Paw-Shaped Plush Pet Bed with Non-Slip Bottom, Soft Polyester & Polyester Fiber Fill",
+    "price": 672,
+    "img": "Accesories/pet bed 2.png",
+    "stock": true
+  },
+  {
+    "id": "AC-19",
+    "brand": "CozyNest",
+    "name": "Long Plush Calming Dog Bed Cat Bed, Round Donut Washable Cat Nest, Anti-Slip Faux Fur Fluffy Cuddler",
+    "price": 700,
+    "img": "Accesories/pet bed 3.png",
+    "stock": true
+  },
+  {
+    "id": "AC-20",
+    "brand": "Animalandia",
+    "name": "Pet Toothbrush",
+    "price": 50,
+    "img": "Accesories/Pet Toothbrush.png",
+    "stock": true
+  },
+  {
+    "id": "AC-21",
+    "brand": "Animalandia",
+    "name": "Stainless Steel Bowl",
+    "price": 70,
+    "img": "Accesories/Stainless Steel Bowl.png",
+    "stock": true
+  },
+  {
+    "id": "HP-1",
+    "brand": "Papi",
+    "name": "Papi Scour 60Ml: Co-Trimoxazole",
+    "price": 568,
+    "img": "Health/co_ trimoxazole.png",
+    "stock": true
+  },
+  {
+    "id": "HP-2",
+    "brand": "NutriVet",
+    "name": "NUTRIVET BROMHEXINE 0.3% (100 ml) MOCULYTIC",
+    "price": 235,
+    "img": "Health/Bromhexine.png",
+    "stock": true
+  },
+  {
+    "id": "HP-3",
+    "brand": "Emerflox",
+    "name": "Emerflox Enrofloxacin Oral Suspension for Cats & Dogs 60ml Liquid Meds Eme",
+    "price": 218,
+    "img": "Health/Emerfloxacin.png",
+    "stock": true
+  },
+  {
+    "id": "HP-4",
+    "brand": "Meoxiclav",
+    "name": "MEOXICLAV - PAW ( CO - AMOXICLAV ) For Dogs & Cats | 60ml",
+    "price": 320,
+    "img": "Health/Co-amoxiclav.png",
+    "stock": true
+  },
+  {
+    "id": "HP-5",
+    "brand": "Mondex",
+    "name": "Mondex Dextrose Powder 100 g and 340 g",
+    "price": 97,
+    "img": "Health/Dextrose mondex.png",
+    "stock": true
+  },
+  {
+    "id": "HP-6",
+    "brand": "Nematocide",
+    "name": "Nematocide Dewormer for Pets",
+    "price": 96,
+    "img": "Health/Pyrantel nematicide.png",
+    "stock": true
+  },
+  {
+    "id": "HP-7",
+    "brand": "LC-Vit",
+    "name": "LC-Vit Syrup 60ml Multivitamins for Dogs & Cats",
+    "price": 119,
+    "img": "Health/Lc vit multivitamin.png",
+    "stock": true
+  },
+  {
+    "id": "HP-8",
+    "brand": "Papi",
+    "name": "Papi MVP Multivitamins 120ml for Dog and Cats Liquid Meds",
+    "price": 96,
+    "img": "Health/Mvp multivitamin.png",
+    "stock": true
+  },
+  {
+    "id": "HP-9",
+    "brand": "Bioline",
+    "name": "Eye Care for pet Dogs Cats & Rabbits BIOLINE 50 ML Mild Eye Cleaner",
+    "price": 149,
+    "img": "Health/‎Eye care.png",
+    "stock": true
+  },
+  {
+    "id": "HP-10",
+    "brand": "Cassiel",
+    "name": "Cassiel Pet Ear Drops For Eliminate Ear Mites Treating Ear Canal Odor Pus And Itching For Dogs & Cat",
+    "price": 159,
+    "img": "Health/‎Ear mite.png",
+    "stock": true
+  },
+  {
+    "id": "HP-11",
+    "brand": "Mupirocin",
+    "name": "MUPIROCIN MUPIROW OINTMENT 5g 1tube",
+    "price": 135,
+    "img": "Health/Ointment mupirocin.png",
+    "stock": true
+  },
+  {
+    "id": "HP-12",
+    "brand": "NexGard",
+    "name": "NexGard Tablets for Dogs - Effective Pest Management",
+    "price": 545,
+    "img": "Health/Nextgard.png",
     "stock": true
   }
 ]
