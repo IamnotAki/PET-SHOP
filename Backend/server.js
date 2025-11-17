@@ -32,14 +32,16 @@ function writeJSON(filename, data) {
 app.get("/api/catfood", (req, res) => res.json(readJSON("catfood.json")));
 
 // ❗ NEW: CREATE/ADD Route (using POST)
+// server.js (Ensure this route is added)
+
+// ❗ NEW: CREATE/ADD Route (using POST)
 app.post("/api/catfood", (req, res) => {
   const newProductData = req.body;
   
   try {
     let products = readJSON("catfood.json");
     
-    // 1. Generate a new unique ID
-    // Find the current highest ID number (e.g., from CF-99)
+    // 1. Generate a new unique ID (e.g., CF-5, CF-6, etc.)
     const maxIdNum = products.reduce((max, p) => {
       const match = p.id.match(/CF-(\d+)/);
       return match ? Math.max(max, parseInt(match[1])) : max;
@@ -50,7 +52,6 @@ app.post("/api/catfood", (req, res) => {
     const newProduct = {
       id: newId,
       ...newProductData,
-      // Ensure 'stock' is a boolean, as expected by the JSON file
       stock: newProductData.stock === true 
     };
 
@@ -60,7 +61,6 @@ app.post("/api/catfood", (req, res) => {
     // 4. Save the entire updated array back to the file
     writeJSON("catfood.json", products);
     
-    // Respond with the newly created product
     res.status(201).json({ 
       message: "Product created successfully", 
       product: newProduct 
@@ -71,6 +71,8 @@ app.post("/api/catfood", (req, res) => {
     res.status(500).json({ message: "Failed to create product due to server error." });
   }
 });
+
+// ... (existing server.listen)
 
 // ... (existing server.listen)
 

@@ -34,5 +34,13 @@
     "img": "Products/product5.png14",
     "stock": true,
     "desc": "Dual time zone travel watch — iconic \"Pepsi\" bezel."
+  },
+  {
+    "id": "CF-5",
+    "brand": "Royal Canid",
+    "name": "Royal Canin Maxi Adult",
+    "price": 2595,
+    "img": "Products/product2.png",
+    "stock": true
   }
 ]

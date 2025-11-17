@@ -140,37 +140,27 @@ function saveProduct() {
   const image = document.getElementById("image").value;
   const stockValue = document.getElementById("stock").value;
 
-  // Basic validation (can be improved)
+  // Basic validation
   if (!brand || !name || isNaN(price) || !image) {
       return alert("Please fill in all fields correctly.");
   }
   
-  const updatedData = {
+  const productPayload = {
       brand: brand,
       name: name,
       price: price,
-      img: image, // Use 'img' to match catfood.json property
+      img: image, 
       stock: stockValue === "true" // Convert to boolean for API
   };
 
   if (currentEditingProduct) {
-      // ❗ EDITING EXISTING PRODUCT: Use the new API update function
-      updateProductAPI(currentEditingProduct.id, updatedData);
+      // EDITING EXISTING PRODUCT (Uses PUT route)
+      updateProductAPI(currentEditingProduct.id, productPayload);
   } else {
-      // ❗ ADDING NEW PRODUCT: Since your backend doesn't have a POST route,
-      // we'll revert to the local storage add for now, and alert the user.
-      alert("Adding new products is not implemented in the API yet. Adding locally.");
-      
-      let products = JSON.parse(localStorage.getItem("customProducts")) || [];
-      const newId = "LOCAL-" + Date.now();
-      const newProduct = { id: newId, image: image, stock: stockValue, brand, name, price };
-      products.push(newProduct);
-      localStorage.setItem("customProducts", JSON.stringify(products));
-      loadAdminProducts();
-      closeModal();
+      // ❗ ADDING NEW PRODUCT (Uses the new POST route)
+      createProductAPI(productPayload);
   }
 }
-
 // =======================
 // 🔸 DELETE PRODUCT (Not implemented in API, kept as local for now)
 // =======================
