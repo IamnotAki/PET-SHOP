@@ -4,8 +4,9 @@
     "brand": "Royal Canid",
     "name": "Royal Canin Urinary",
     "price": 1190,
-    "img": "Products/product5.png",
-    "stock": true
+    "img": "product5.png",
+    "stock": true,
+    "type": "Cat Food"
   },
   {
     "id": "CF-2",

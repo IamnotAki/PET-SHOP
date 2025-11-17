@@ -62,6 +62,16 @@ tbody tr:hover{ background:#fafaff; }
 
 <div class="modal" id="productModal">
   <div class="modal-box">
+    <div class="form-group">
+    <label for="type">Product Type</label>
+    <select id="type" required>
+        <option value="" disabled selected>Select Type</option>
+        <option value="Cat Food">Cat Food</option>
+        <option value="Dog Food">Dog Food</option>
+        <option value="Accessories">Accessories</option>
+        <option value="Health Products">Health Products</option>
+    </select>
+</div>
     <h2 id="modalTitle" style="color:#5c2eb8;">Add Product</h2>
     <input type="text" id="brand" placeholder="Brand">
     <input type="text" id="name" placeholder="Product Name">

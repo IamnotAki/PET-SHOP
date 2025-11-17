@@ -53,7 +53,17 @@ function toggleStatus(id) {
 // 🔸 UTILITIES
 // =======================
 function closeModal() {
-  document.getElementById("productModal").style.display = "none";
+    document.getElementById("productModal").style.display = "none";
+    currentEditingProduct = null;
+    
+    // Reset all form fields
+    document.getElementById("brand").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("image").value = "";
+    document.getElementById("stock").value = "true";
+    // ❗ NEW: Reset the type dropdown
+    document.getElementById("type").value = ""; 
 }
 
 function openAddProduct() {
@@ -133,15 +143,19 @@ async function updateProductAPI(productId, data) {
 // =======================
 // 🔸 SAVE PRODUCT (Modified to use API for editing)
 // =======================
+// admin.js (REPLACE existing saveProduct function with this)
+
 function saveProduct() {
   const brand = document.getElementById("brand").value;
   const name = document.getElementById("name").value;
   const price = parseFloat(document.getElementById("price").value);
   const image = document.getElementById("image").value;
   const stockValue = document.getElementById("stock").value;
+  // ❗ NEW: Get the selected product type
+  const productType = document.getElementById("type").value; 
 
-  // Basic validation
-  if (!brand || !name || isNaN(price) || !image) {
+  // Updated validation to check for product type
+  if (!brand || !name || isNaN(price) || !image || !productType) {
       return alert("Please fill in all fields correctly.");
   }
   
@@ -150,14 +164,16 @@ function saveProduct() {
       name: name,
       price: price,
       img: image, 
-      stock: stockValue === "true" // Convert to boolean for API
+      stock: stockValue === "true",
+      // ❗ NEW: Include productType in the payload
+      type: productType 
   };
 
   if (currentEditingProduct) {
       // EDITING EXISTING PRODUCT (Uses PUT route)
       updateProductAPI(currentEditingProduct.id, productPayload);
   } else {
-      // ❗ ADDING NEW PRODUCT (Uses the new POST route)
+      // ADDING NEW PRODUCT (Uses POST route)
       createProductAPI(productPayload);
   }
 }
