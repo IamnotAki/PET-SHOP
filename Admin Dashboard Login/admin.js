@@ -53,7 +53,17 @@ function toggleStatus(id) {
 // 🔸 UTILITIES
 // =======================
 function closeModal() {
-  document.getElementById("productModal").style.display = "none";
+    document.getElementById("productModal").style.display = "none";
+    currentEditingProduct = null;
+    
+    // Reset all form fields
+    document.getElementById("brand").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("image").value = "";
+    document.getElementById("stock").value = "true";
+    // ❗ NEW: Reset the type dropdown
+    document.getElementById("type").value = ""; 
 }
 
 function openAddProduct() {
@@ -133,56 +143,48 @@ async function updateProductAPI(productId, data) {
 // =======================
 // 🔸 SAVE PRODUCT (Modified to use API for editing)
 // =======================
+// admin.js (REPLACE existing saveProduct function with this)
+
 function saveProduct() {
   const brand = document.getElementById("brand").value;
   const name = document.getElementById("name").value;
   const price = parseFloat(document.getElementById("price").value);
   const image = document.getElementById("image").value;
   const stockValue = document.getElementById("stock").value;
+  // ❗ NEW: Get the selected product type
+  const productType = document.getElementById("type").value; 
 
-  // Basic validation (can be improved)
-  if (!brand || !name || isNaN(price) || !image) {
+  // Updated validation to check for product type
+  if (!brand || !name || isNaN(price) || !image || !productType) {
       return alert("Please fill in all fields correctly.");
   }
   
-  const updatedData = {
+  const productPayload = {
       brand: brand,
       name: name,
       price: price,
-      img: image, // Use 'img' to match catfood.json property
-      stock: stockValue === "true" // Convert to boolean for API
+      img: image, 
+      stock: stockValue === "true",
+      // ❗ NEW: Include productType in the payload
+      type: productType 
   };
 
   if (currentEditingProduct) {
-      // ❗ EDITING EXISTING PRODUCT: Use the new API update function
-      updateProductAPI(currentEditingProduct.id, updatedData);
+      // EDITING EXISTING PRODUCT (Uses PUT route)
+      updateProductAPI(currentEditingProduct.id, productPayload);
   } else {
-      // ❗ ADDING NEW PRODUCT: Since your backend doesn't have a POST route,
-      // we'll revert to the local storage add for now, and alert the user.
-      alert("Adding new products is not implemented in the API yet. Adding locally.");
-      
-      let products = JSON.parse(localStorage.getItem("customProducts")) || [];
-      const newId = "LOCAL-" + Date.now();
-      const newProduct = { id: newId, image: image, stock: stockValue, brand, name, price };
-      products.push(newProduct);
-      localStorage.setItem("customProducts", JSON.stringify(products));
-      loadAdminProducts();
-      closeModal();
+      // ADDING NEW PRODUCT (Uses POST route)
+      createProductAPI(productPayload);
   }
 }
-
 // =======================
 // 🔸 DELETE PRODUCT (Not implemented in API, kept as local for now)
 // =======================
-function deleteProduct(index) {
-  if(!confirm("Delete this product?")) return;
-
-  // Since we are loading from API, we can't delete static API products.
-  alert("Deletion is not implemented for API products. Please implement a DELETE route in server.js.");
-  
-  // NOTE: If you still have local storage products, this logic will break
-  // because the index no longer correlates to the combined list. 
-  // For simplicity, we remove the local storage logic for now.
+function deleteProduct(productId) {
+    if(!confirm(`Delete product ${productId}? This cannot be undone.`)) return;
+    
+    // Call the new API function
+    deleteProductAPI(productId);
 }
 
 
@@ -257,6 +259,41 @@ async function createProductAPI(data) {
         console.error("Failed to create new product:", error);
         alert("Failed to create new product: " + error.message);
     }
+}
+// admin.js (CORRECT deleteProductAPI function)
+
+// ❗ CORRECTED: Function to handle the actual API deletion (DELETE request)
+async function deleteProductAPI(productId) {
+    try {
+        const response = await fetch(`${API_URL}/api/catfood/${productId}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+        
+        // Reload products after successful deletion
+        await loadAdminProducts();
+        alert(`Product ${productId} deleted successfully!`);
+
+    } catch (error) {
+        console.error("Failed to delete product:", error);
+        alert("Failed to delete product: " + error.message);
+    }
+}
+
+// =======================
+// 🔸 DELETE PRODUCT (User facing wrapper)
+// =======================
+function deleteProduct(productId) {
+    if(!confirm(`Are you sure you want to delete Product ID ${productId}? This action cannot be undone.`)) {
+        return;
+    }
+    
+    // Call the new API function
+    deleteProductAPI(productId);
 }
 
 // Execute on load

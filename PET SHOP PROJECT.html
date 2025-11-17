@@ -186,7 +186,7 @@
     <nav>
       <ul>
         <li><a href="PET SHOP PROJECT.html">Home</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="About.html">About</a></li>
         <li><a href="Contact.html">Contact</a></li>
         <li id="userDisplay"><a href="Login.html">Login</a></li>
         <li id="adminLink" style="display:none;"><a href="admin.html">Admin Panel</a></li>
@@ -547,8 +547,13 @@
     function checkLoginStatus() {
       const user = JSON.parse(localStorage.getItem('loggedInUser'));
       const userDisplay = document.getElementById('userDisplay');
+      const adminLink = document.getElementById('adminLink');
+
       if (user) {
         userDisplay.innerHTML = `<span>Welcome, ${user.name}</span>`;
+        if (user.email === 'admin@animalandia.com') {
+          adminLink.style.display = 'block';
+        }
         userDisplay.addEventListener('click', function() {
           if (confirm('Logout?')) {
             localStorage.removeItem('loggedInUser');
@@ -560,27 +565,6 @@
       }
     }
     checkLoginStatus();
-
-    function checkLoginStatus() {
-  const user = JSON.parse(localStorage.getItem('loggedInUser'));
-  const userDisplay = document.getElementById('userDisplay');
-  const adminLink = document.getElementById('adminLink');
-  
-  if (user) {
-    userDisplay.innerHTML = `<span>Welcome, ${user.name}</span>`;
-    if (user.email === 'admin@animalandia.com') {
-      adminLink.style.display = 'block';
-    }
-    userDisplay.addEventListener('click', function() {
-      if (confirm('Logout?')) {
-        localStorage.removeItem('loggedInUser');
-        location.reload();
-      }
-    });
-  } else {
-    userDisplay.innerHTML = '<a href="Login.html">Login</a>';
-  }
-}
   </script>
 </body>
 </html>

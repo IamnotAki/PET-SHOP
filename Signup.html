@@ -6,6 +6,7 @@
     <title>Sign Up - Animalandia</title>
     <link rel="icon" type="image/png" href="Logo.png">
     <style>
+        /* CSS Styling for the Signup Page */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Poppins', sans-serif;
@@ -31,101 +32,131 @@
             color: #6c3bb6;
             margin-bottom: 20px;
         }
-        .logo a { text-decoration: none; color: #6c3bb6; }
-        h2 {
-            margin-bottom: 20px;
-            color: #6c3bb6;
-            font-weight: 600;
+        .logo a {
+            text-decoration: none;
+            color: inherit;
         }
-        .form-group {
-            margin-bottom: 20px;
+        h2 {
+            margin-bottom: 25px;
+            color: #6c3bb6;
+            font-size: 24px;
+        }
+        .input-group {
+            margin-bottom: 15px;
             text-align: left;
         }
-        label {
+        .input-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
+            color: #4b5563;
         }
-        input[type="text"], input[type="email"], input[type="password"] {
+        .input-group input {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ddd;
+            border: 1px solid #d1d5db;
             border-radius: 8px;
             font-size: 16px;
             transition: border-color 0.3s;
         }
-        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
-            border-color: #6c3bb6;
+        .input-group input:focus {
             outline: none;
+            border-color: #6c3bb6;
+            box-shadow: 0 0 0 3px rgba(108, 59, 182, 0.2);
         }
-        .signup-btn {
+        button {
             width: 100%;
             padding: 12px;
-            background: linear-gradient(90deg, #f7931e, #ffae42);
+            background: #f7931e;
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(247, 147, 30, 0.3);
+            font-weight: 600;
+            font-size: 17px;
+            margin-top: 15px;
+            transition: background 0.3s, transform 0.1s;
         }
-        .signup-btn:hover {
-            background: linear-gradient(90deg, #ffae42, #f7931e);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(247, 147, 30, 0.4);
+        button:hover {
+            background: #e6840d;
+            transform: translateY(-1px);
         }
-        .links {
+        .login-link {
             margin-top: 20px;
             font-size: 14px;
+            color: #4b5563;
         }
-        .links a {
+        .login-link a {
             color: #6c3bb6;
             text-decoration: none;
-            margin: 0 10px;
+            font-weight: 600;
         }
-        .links a:hover { text-decoration: underline; }
-        .back-link {
-            display: block;
-            margin-top: 20px;
-            color: #999;
-            text-decoration: none;
-            font-size: 14px;
+        .login-link a:hover {
+            text-decoration: underline;
         }
-        .back-link:hover { color: #6c3bb6; }
+        /* Utility for custom alert/modal, replacing alert() */
+        .custom-alert {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: none; justify-content: center;
+            align-items: center; z-index: 1000;
+        }
+        .alert-content {
+            background: white; padding: 25px; border-radius: 10px;
+            max-width: 300px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .alert-content button {
+            margin-top: 15px; background: #6c3bb6;
+        }
     </style>
 </head>
 <body>
+
+    <div class="custom-alert" id="customAlert">
+        <div class="alert-content">
+            <p id="alertMessage"></p>
+            <button onclick="closeCustomAlert()">OK</button>
+        </div>
+    </div>
+
     <div class="signup-container">
         <div class="logo"><a href="PET SHOP PROJECT.html">🐾 Animalandia</a></div>
-        <h2>Create Your Account</h2>
+        <h2>Create an Account</h2>
         <form id="signupForm">
-            <div class="form-group">
+            <div class="input-group">
                 <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                <input type="text" id="name" name="name" required>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required placeholder="Enter your email">
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
             </div>
-            <div class="form-group">
+            <div class="input-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                <input type="password" id="password" name="password" required>
             </div>
-            <div class="form-group">
+            <div class="input-group">
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
             </div>
-            <button type="submit" class="signup-btn">Sign Up</button>
+            <button type="submit">Sign Up</button>
         </form>
-        <div class="links">
-            <a href="Login.html">Already have an account? Login</a>
+        <div class="login-link">
+            Already have an account? <a href="Login.html">Log In</a>
         </div>
-        <a href="PET SHOP PROJECT.html" class="back-link">← Back to Home</a>
     </div>
 
     <script>
+        // Custom Alert functions (replacing the forbidden native alert())
+        function showCustomAlert(message) {
+            document.getElementById('alertMessage').textContent = message;
+            document.getElementById('customAlert').style.display = 'flex';
+        }
+
+        function closeCustomAlert() {
+            document.getElementById('customAlert').style.display = 'none';
+        }
+
+        // Form Submission Logic
         document.getElementById('signupForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const name = document.getElementById('name').value;
@@ -136,22 +167,40 @@
             if (name && email && password && confirmPassword) {
                 if (password === confirmPassword) {
                     // Simulate signup (store in localStorage for demo)
-                    const users = JSON.parse(localStorage.getItem('users')) || [];
+                    let users = JSON.parse(localStorage.getItem('users')) || [];
                     const existingUser = users.find(user => user.email === email);
-                    if (existingUser) {
-                        alert('User already exists. Please login.');
-                        window.location.href = 'Login.html';
+                    
+                    // Add default admin if it doesn't exist
+                    const hasAdmin = users.some(u => u.email === 'admin@animalandia.com');
+                    if (!hasAdmin) {
+                        // Using a simple, non-production way to manage users for demo purposes
+                        users.push({ email: 'admin@animalandia.com', password: 'Admin123', name: 'Admin' });
+                    }
+
+                    if (existingUser && existingUser.email !== 'admin@animalandia.com') {
+                        showCustomAlert('User already exists. Please login.');
+                        // Note: To avoid immediate redirect after alert, we use a timeout
+                        setTimeout(() => { window.location.href = 'Login.html'; }, 1000); 
                     } else {
+                        // Check again for existing user, excluding the default admin we just created
+                        const nonAdminExisting = users.find(user => user.email === email && user.email !== 'admin@animalandia.com');
+                        if (nonAdminExisting) {
+                            showCustomAlert('User already exists. Please login.');
+                            setTimeout(() => { window.location.href = 'Login.html'; }, 1000); 
+                            return;
+                        }
+                        
+                        // Register new user
                         users.push({ name, email, password });
                         localStorage.setItem('users', JSON.stringify(users));
-                        alert('Sign up successful! Please login.');
-                        window.location.href = 'Login.html';
+                        showCustomAlert('Sign up successful! Please login.');
+                        setTimeout(() => { window.location.href = 'Login.html'; }, 1000); 
                     }
                 } else {
-                    alert('Passwords do not match.');
+                    showCustomAlert('Passwords do not match.');
                 }
             } else {
-                alert('Please fill in all fields.');
+                showCustomAlert('Please fill in all fields.');
             }
         });
     </script>
