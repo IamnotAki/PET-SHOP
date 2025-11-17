@@ -396,29 +396,6 @@
       el.classList.toggle("liked");
     }
     updateCartSidebar();
-
-    // Para sa Login natin - Arquel
-    function checkLoginStatus() {
-      const user = JSON.parse(localStorage.getItem('loggedInUser'));
-      const userDisplay = document.getElementById('userDisplay');
-      const adminLink = document.getElementById('adminLink');
-
-      if (user) {
-        userDisplay.innerHTML = `<span>Welcome, ${user.name}</span>`;
-        if (user.email === 'admin@animalandia.com') {
-          adminLink.style.display = 'block';
-        }
-        userDisplay.addEventListener('click', function() {
-          if (confirm('Logout?')) {
-            localStorage.removeItem('loggedInUser');
-            location.reload();
-          }
-        });
-      } else {
-        userDisplay.innerHTML = '<a href="Login.html">Login</a>';
-      }
-    }
-    checkLoginStatus();
   </script>
 </body>
 </html>

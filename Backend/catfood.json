@@ -1,0 +1,38 @@
+[
+  {
+    "id": "CF-1",
+    "brand": "Royal Canid",
+    "name": "Royal Canin Urinary",
+    "price": 1190,
+    "img": "Products/product5.png",
+    "stock": true,
+    "desc": "Iconic diver watch, 40mm Oystersteel case, unidirectional bezel."
+  },
+  {
+    "id": "CF-2",
+    "brand": "Royal Canid",
+    "name": "Royal Canin Hairball Care",
+    "price": 1250,
+    "img": "Products/product6.png",
+    "stock": true,
+    "desc": "Legendary racing chronograph with Cerachrom bezel and Oyster bracelet."
+  },
+  {
+    "id": "CF-3",
+    "brand": "Royal Canid",
+    "name": "Royal Canin Kitten",
+    "price": 2250,
+    "img": "Products/product7.png",
+    "stock": false,
+    "desc": "Timeless Datejust in steel with fluted bezel and jubilee bracelet."
+  },
+  {
+    "id": "CF-4",
+    "brand": "Royal Canid",
+    "name": "Nutricare Cat Dry Food For All Stages",
+    "price": 1250,
+    "img": "Products/product5.png14",
+    "stock": true,
+    "desc": "Dual time zone travel watch — iconic \"Pepsi\" bezel."
+  }
+]
