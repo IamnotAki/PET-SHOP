@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout | Animalandia</title>
   <link rel="icon" type="image/png" href="Logo.png">
+
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -90,23 +91,6 @@
       border: 1px solid #ddd;
     }
 
-    .checkout-summary h4 {
-      font-size: 14px;
-      margin: 0;
-      color: #333;
-    }
-
-    .checkout-summary p {
-      margin: 4px 0;
-      font-size: 14px;
-    }
-
-    hr {
-      border: none;
-      border-top: 1px solid #ddd;
-      margin: 10px 0;
-    }
-
     .total {
       font-weight: 700;
       font-size: 18px;
@@ -131,43 +115,83 @@
     .checkout-btn:hover {
       background: #5a3da0;
     }
-      .back-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: linear-gradient(90deg, #8c58de, #5b3cbc, #9505db);
-  color: white;
-  font-weight: 600;
-  font-size: 16px;
-  border: none;
-  border-radius: 50px;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(149, 5, 219, 0.3);
-  transition: all 0.3s ease;
-  padding: 12px 25px;
-  margin: 40px auto 60px;
-  display: block;
-  width: fit-content;
-}
-.back-btn:hover {
-  background: linear-gradient(90deg, #5b3cbc, #8c58de, #b26fff);
-  transform: scale(1.05);
-  box-shadow: 0 6px 14px rgba(149, 5, 219, 0.4);
-}
-.back-btn::before {
-  content: "←";
-  font-size: 18px;
-}
 
+    .back-btn {
+      display: block;
+      width: fit-content;
+      background: linear-gradient(90deg, #8c58de, #5b3cbc, #9505db);
+      color: white;
+      padding: 12px 25px;
+      margin: 40px auto 60px;
+      border-radius: 40px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* ===== SUCCESS ANIMATION ===== */
+    #successModal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .success-box {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      width: 350px;
+      animation: pop 0.4s ease-out;
+    }
+
+    .checkmark {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 5px solid #6a4caf;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      animation: scaleIn 0.4s ease-out;
+    }
+
+    .checkmark i {
+      font-size: 45px;
+      color: #6a4caf;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
   </style>
 </head>
+
 <body>
 
   <div class="checkout-container">
-    <!-- LEFT SIDE -->
     <div class="checkout-left">
       <h3>Contact</h3>
       <label>Email or Mobile Phone Number</label>
@@ -177,9 +201,6 @@
       <label>Country/Region</label>
       <select>
         <option>Philippines</option>
-        <option>United States</option>
-        <option>China</option>
-        <option>Russia</option>
       </select>
       <label>First Name</label>
       <input type="text" placeholder="First Name">
@@ -196,88 +217,92 @@
       <label><input type="radio" name="payment" checked> Bank Deposit</label><br>
       <small>BPI Bank — Account Name: Christembert Manalo — 0990-010-145</small><br><br>
       <label><input type="radio" name="payment"> E-wallet (GCash, PayMaya)</label><br>
-      <label><input type="radio" name="payment"> Money Remittance (LBC, Palawan, Cebuana)</label>
+      <label><input type="radio" name="payment"> Money Remittance</label>
 
-      <button class="checkout-btn">Complete Order</button>
-      <a href="PET SHOP PROJECT.html" class="back-btn">Back to Home</a>
+      <button class="checkout-btn" onclick="completeOrder()">Complete Order</button>
+      <a href="PET SHOP PROJECT.html" class="back-btn">← Back to Home</a>
     </div>
 
-    <!-- RIGHT SIDE -->
     <div class="checkout-right">
-      <div class="checkout-summary" id="order-summary">
-        <!-- Product details will appear here -->
-      </div>
+      <div class="checkout-summary" id="order-summary"></div>
+    </div>
+  </div>
+
+  <!-- SUCCESS POPUP -->
+  <div id="successModal">
+    <div class="success-box">
+      <div class="checkmark"><i>✔</i></div>
+      <h2>Order Completed!</h2>
+      <p>Thank you for your purchase ❤️</p>
     </div>
   </div>
 
   <script>
     const summary = document.getElementById('order-summary');
     const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cart = JSON.parse(localStorage.getItem('checkoutCart')) || [];
 
-    function renderSingleProduct(p) {
+    function renderSingle(p) {
       const shipping = 150;
-      const subtotal = p.price * (p.qty || 1);
-      const total = subtotal + shipping;
-
+      const subtotal = p.price * p.qty;
       summary.innerHTML = `
         <h3>Your Order</h3>
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-          <img src="${p.image}" alt="${p.name}">
+        <div style="display:flex; gap:10px; align-items:center;">
+          <img src="${p.image}">
           <div>
             <h4>${p.name}</h4>
-            <p>₱${p.price.toLocaleString()} × ${p.qty || 1}</p>
+            <p>₱${p.price} × ${p.qty}</p>
           </div>
         </div>
         <hr>
-        <p>Subtotal: ₱${subtotal.toLocaleString()}</p>
-        <p>Shipping: ₱${shipping.toLocaleString()}</p>
-        <div class="total">Total: ₱${total.toLocaleString()}</div>
+        <p>Subtotal: ₱${subtotal}</p>
+        <p>Shipping: ₱150</p>
+        <div class="total">Total: ₱${subtotal + 150}</div>
       `;
     }
 
-    function renderCart(items) {
+    function renderCart(list) {
       let subtotal = 0;
-      const shipping = 150;
-      let list = `<h3>Your Order</h3>`;
-
-      items.forEach(item => {
-        const qty = item.qty || 1;
-        const totalItem = item.price * qty;
-        subtotal += totalItem;
-        list += `
-          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-            <img src="${item.image || item.img}" alt="${item.name}">
-            <div>
-              <h4>${item.name}</h4>
-              <p>₱${item.price.toLocaleString()} × ${qty}</p>
-            </div>
+      let html = `<h3>Your Order</h3>`;
+      list.forEach(item => {
+        subtotal += item.price * item.qty;
+        html += `
+          <div style="display:flex; gap:10px; margin-bottom:10px;">
+            <img src="${item.img}">
+            <div><h4>${item.name}</h4><p>₱${item.price} × ${item.qty}</p></div>
           </div>
         `;
       });
 
-      const total = subtotal + shipping;
-      list += `
+      html += `
         <hr>
-        <p>Subtotal: ₱${subtotal.toLocaleString()}</p>
-        <p>Shipping: ₱${shipping.toLocaleString()}</p>
-        <div class="total">Total: ₱${total.toLocaleString()}</div>
+        <p>Subtotal: ₱${subtotal}</p>
+        <p>Shipping: ₱150</p>
+        <div class="total">Total: ₱${subtotal + 150}</div>
       `;
-      summary.innerHTML = list;
+      summary.innerHTML = html;
     }
 
-    // Show Buy Now product first, else show cart
-    if (selectedProduct && selectedProduct.name) {
-      renderSingleProduct(selectedProduct);
-    } else if (cart.length > 0) {
-      renderCart(cart);
-    } else {
-      summary.innerHTML = `
-        <h3>Your Order</h3>
-        <p>No product selected. Please go back and choose a product.</p>
-        <a href="PET SHOP PROJECT.html" class="back-btn">← Back to Home</a>
-      `;
+    if (selectedProduct) renderSingle(selectedProduct);
+    else if (cart.length > 0) renderCart(cart);
+
+    
+    // COMPLETE ORDER ANIMATION
+    function completeOrder() {
+      const modal = document.getElementById("successModal");
+      modal.style.display = "flex";
+
+      // Clear order data
+      localStorage.removeItem("cart");
+      localStorage.removeItem("checkoutCart");
+      localStorage.removeItem("selectedProduct");
+
+      setTimeout(() => {
+        modal.style.display = "none";
+        window.location.href = "PET SHOP PROJECT.html";
+      }, 2500);
     }
   </script>
 </body>
 </html>
+
