@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<style>
+body { background: #f7f7f9; color: #333; font-family: Poppins,sans-serif; margin:0; padding:0; display:none; } /* hide until login check */
+h2,h3{ font-weight:600; margin:0; }
+header{ background:#fff; padding:20px 40px; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #e5e7eb; box-shadow:0 2px 6px rgba(0,0,0,0.05);}
+header h2{ font-size:22px; color:#5c2eb8; }
+header button{ background:#ff4d4d; color:white; padding:10px 18px; border:none; border-radius:8px; cursor:pointer; font-weight:600;}
+header button:hover{ opacity:0.85; }
+.container{ padding:30px 40px; }
+.card{ background:#fff; padding:20px; border-radius:14px; box-shadow:0 4px 12px rgba(0,0,0,0.06); margin-bottom:35px; }
+.card h3{ color:#5c2eb8; margin-bottom:15px; }
+table{ width:100%; border-collapse:separate; border-spacing:0 10px; }
+thead th{ text-align:left; padding:12px; color:#555; font-size:14px; font-weight:600; }
+tbody tr{ background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05); border-radius:12px; }
+tbody td{ padding:14px 12px; font-size:14px; border-top:1px solid transparent; }
+td img{ width:55px; height:55px; border-radius:10px; object-fit:cover; }
+tbody tr:hover{ background:#fafaff; }
+.add-btn{ background:#6d28d9; color:white; padding:12px 18px; border-radius:10px; font-weight:600; border:none; cursor:pointer; margin-bottom:15px; }
+.add-btn:hover{ background:#5b21b6; }
+.action-btn{ padding:8px 14px; border-radius:8px; color:white; font-size:13px; border:none; cursor:pointer;}
+.edit-btn{ background:#4f46e5; }
+.delete-btn{ background:#f43f5e; }
+.block-btn{ background:#fbbf24; color:black; }
+.modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); justify-content:center; align-items:center; }
+.modal-box{ background:#fff; padding:25px; width:420px; border-radius:16px; box-shadow:0 8px 20px rgba(0,0,0,0.15); animation:fadeIn 0.25s ease-in-out;}
+@keyframes fadeIn{ from{opacity:0; transform:translateY(-10px);} to{opacity:1; transform:translateY(0);} }
+.modal-box input,.modal-box select{ width:100%; padding:12px; margin-top:10px; background:#f4f4f7; border:1px solid #d1d5db; border-radius:10px; font-size:14px;}
+.save-btn{ width:100%; background:#4ade80; padding:12px; border:none; border-radius:10px; font-weight:600; margin-top:15px; cursor:pointer; }
+.close-btn{ width:100%; background:#9ca3af; padding:12px; border:none; border-radius:10px; margin-top:10px; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<header>
+  <h2>Admin Dashboard</h2>
+  <button onclick="logout()">Logout</button>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h3>Users</h3>
+    <table id="userTable">
+      <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Products</h3>
+    <button class="add-btn" onclick="openAddProduct()">+ Add Product</button>
+    <table id="productTable">
+      <thead><tr><th>ID</th><th>Brand</th><th>Name</th><th>Price</th><th>Stock</th><th>Image</th><th>Actions</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal" id="productModal">
+  <div class="modal-box">
+    <h2 id="modalTitle" style="color:#5c2eb8;">Add Product</h2>
+    <input type="text" id="brand" placeholder="Brand">
+    <input type="text" id="name" placeholder="Product Name">
+    <input type="number" id="price" placeholder="Price">
+    <input type="text" id="image" placeholder="Image URL">
+    <select id="stock">
+      <option value="true">In Stock</option>
+      <option value="false">Out of Stock</option>
+    </select>
+    <button class="save-btn" onclick="saveProduct()">Save</button>
+    <button class="close-btn" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<script src="admin.js"></script>
+<script>
+// LOGIN CHECK & SHOW BODY
+if(localStorage.getItem("loggedIn") !== "true"){
+  window.location.href = "login.html";
+}else{
+  document.body.style.display = "block";
+}
+
+// LOGOUT FUNCTION
+function logout(){
+  localStorage.removeItem("loggedIn");
+  window.location.href = "login.html";
+}
+</script>
+</body>
+</html>
