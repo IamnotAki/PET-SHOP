@@ -164,15 +164,11 @@ function saveProduct() {
 // =======================
 // 🔸 DELETE PRODUCT (Not implemented in API, kept as local for now)
 // =======================
-function deleteProduct(index) {
-  if(!confirm("Delete this product?")) return;
-
-  // Since we are loading from API, we can't delete static API products.
-  alert("Deletion is not implemented for API products. Please implement a DELETE route in server.js.");
-  
-  // NOTE: If you still have local storage products, this logic will break
-  // because the index no longer correlates to the combined list. 
-  // For simplicity, we remove the local storage logic for now.
+function deleteProduct(productId) {
+    if(!confirm(`Delete product ${productId}? This cannot be undone.`)) return;
+    
+    // Call the new API function
+    deleteProductAPI(productId);
 }
 
 
@@ -247,6 +243,41 @@ async function createProductAPI(data) {
         console.error("Failed to create new product:", error);
         alert("Failed to create new product: " + error.message);
     }
+}
+// admin.js (CORRECT deleteProductAPI function)
+
+// ❗ CORRECTED: Function to handle the actual API deletion (DELETE request)
+async function deleteProductAPI(productId) {
+    try {
+        const response = await fetch(`${API_URL}/api/catfood/${productId}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+        
+        // Reload products after successful deletion
+        await loadAdminProducts();
+        alert(`Product ${productId} deleted successfully!`);
+
+    } catch (error) {
+        console.error("Failed to delete product:", error);
+        alert("Failed to delete product: " + error.message);
+    }
+}
+
+// =======================
+// 🔸 DELETE PRODUCT (User facing wrapper)
+// =======================
+function deleteProduct(productId) {
+    if(!confirm(`Are you sure you want to delete Product ID ${productId}? This action cannot be undone.`)) {
+        return;
+    }
+    
+    // Call the new API function
+    deleteProductAPI(productId);
 }
 
 // Execute on load

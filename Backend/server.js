@@ -145,6 +145,34 @@ app.post("/api/catfood", (req, res) => {
     res.status(500).json({ message: "Failed to create product due to server error." });
   }
 });
+// server.js (Ensure this block is present and correct)
+
+// ❗ DELETE Route to remove a product by ID
+app.delete("/api/catfood/:id", (req, res) => {
+  const productId = req.params.id;
+  
+  try {
+    let products = readJSON("catfood.json");
+    
+    const initialLength = products.length;
+    
+    // Filter out the product with the matching ID
+    products = products.filter(p => p.id !== productId);
+    
+    if (products.length === initialLength) {
+      return res.status(404).json({ message: `Product ID ${productId} not found.` });
+    }
+
+    // Save the filtered (updated) array back to the file
+    writeJSON("catfood.json", products); // Assuming you have a writeJSON helper
+    
+    res.status(200).json({ message: `Product ID ${productId} deleted successfully.` });
+
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    res.status(500).json({ message: "Failed to delete product due to server error." });
+  }
+});
 
 
 server.listen(3000, () => console.log("Backend + WS running on http://localhost:3000"));
