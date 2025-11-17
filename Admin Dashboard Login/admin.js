@@ -1,10 +1,18 @@
-/* ======================================================
-   ADMIN DASHBOARD JS — FULLY WORKING
+// admin.js (MODIFIED)
+
+/* =====================================================
+   ADMIN DASHBOARD JS — NOW API-ENABLED
 ======================================================== */
 
-// ========================
+// Base URL for the API server (IMPORTANT: Use the full URL)
+const API_URL = "http://localhost:3000";
+
+let currentEditingProduct = null; // To hold the product data currently being edited
+
+// =======================
 // 🔸 LOAD USERS (STATIC DEMO)
-// ========================
+// (No change needed here, still uses localStorage)
+// =======================
 function loadUsers() {
   const users = JSON.parse(localStorage.getItem("users")) || [
     { id: 1, name: "John Doe", email: "john@gmail.com", status: "Active" },
@@ -30,8 +38,8 @@ function loadUsers() {
   });
 }
 
-// Toggle Active / Blocked status
 function toggleStatus(id) {
+  // ... (original function)
   const users = JSON.parse(localStorage.getItem("users"));
   const user = users.find(u => u.id === id);
   if(user){
@@ -41,112 +49,190 @@ function toggleStatus(id) {
   }
 }
 
-// ========================
-// 🔸 PRODUCT MODAL CONTROL
-// ========================
-let editIndex = null;
+// =======================
+// 🔸 UTILITIES
+// =======================
+function closeModal() {
+  document.getElementById("productModal").style.display = "none";
+}
 
 function openAddProduct() {
-  editIndex = null;
   document.getElementById("modalTitle").textContent = "Add Product";
   document.getElementById("brand").value = "";
   document.getElementById("name").value = "";
   document.getElementById("price").value = "";
   document.getElementById("image").value = "";
   document.getElementById("stock").value = "true";
+  currentEditingProduct = null; // No product to edit
   document.getElementById("productModal").style.display = "flex";
 }
 
-function openEditProduct(index) {
-  const products = JSON.parse(localStorage.getItem("customProducts")) || [];
-  const p = products[index];
-  if(!p) return;
+// ❗ NEW: OPEN EDIT PRODUCT - Fetches data from the table row
+function openEditProduct(productId) {
+  const table = document.querySelector("#productTable tbody");
+  // Find the product in the table to populate the form (since we don't have a local array anymore)
+  const row = Array.from(table.rows).find(r => r.cells[0].textContent === productId);
+  
+  if (!row) return alert("Product data not found in table.");
 
-  editIndex = index;
-  document.getElementById("modalTitle").textContent = "Edit Product";
-  document.getElementById("brand").value = p.brand;
-  document.getElementById("name").value = p.name;
-  document.getElementById("price").value = p.price;
-  document.getElementById("image").value = p.image;
-  document.getElementById("stock").value = p.stock;
+  // Get data from row cells
+  const data = {
+    id: row.cells[0].textContent,
+    brand: row.cells[1].textContent,
+    name: row.cells[2].textContent,
+    price: parseFloat(row.cells[3].textContent.replace('₱', '')),
+    // The image src in the cell is in an <img> tag, so we need to extract the src
+    img: row.cells[5].querySelector('img').src.split('/').pop(), // Get just the filename
+    stock: row.cells[4].textContent === "In Stock" ? "true" : "false"
+  };
+
+  currentEditingProduct = data; // Store the product data for reference during save
+
+  document.getElementById("modalTitle").textContent = `Edit Product: ${data.id}`;
+  document.getElementById("brand").value = data.brand;
+  document.getElementById("name").value = data.name;
+  document.getElementById("price").value = data.price;
+  document.getElementById("image").value = data.img; 
+  document.getElementById("stock").value = data.stock;
   document.getElementById("productModal").style.display = "flex";
 }
 
-function closeModal() {
-  document.getElementById("productModal").style.display = "none";
+
+// =======================
+// 🔸 API CALLS
+// =======================
+
+// ❗ NEW: Function to handle the actual API update (PUT request)
+async function updateProductAPI(productId, data) {
+    try {
+        const response = await fetch(`${API_URL}/api/catfood/${productId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+        
+        // Reload products after successful update
+        await loadAdminProducts();
+        closeModal();
+        alert(`Product ${productId} updated successfully!`);
+
+    } catch (error) {
+        console.error("Failed to update product:", error);
+        alert("Failed to save product: " + error.message);
+    }
 }
 
-// ========================
-// 🔸 SAVE PRODUCT
-// ========================
+
+// =======================
+// 🔸 SAVE PRODUCT (Modified to use API for editing)
+// =======================
 function saveProduct() {
-  const brand = document.getElementById("brand").value.trim();
-  const name = document.getElementById("name").value.trim();
+  const brand = document.getElementById("brand").value;
+  const name = document.getElementById("name").value;
   const price = parseFloat(document.getElementById("price").value);
-  const image = document.getElementById("image").value.trim();
-  const stock = document.getElementById("stock").value;
+  const image = document.getElementById("image").value;
+  const stockValue = document.getElementById("stock").value;
 
-  if(!brand || !name || !price || !image){
-    alert("Please fill all fields.");
-    return;
+  // Basic validation (can be improved)
+  if (!brand || !name || isNaN(price) || !image) {
+      return alert("Please fill in all fields correctly.");
   }
+  
+  const updatedData = {
+      brand: brand,
+      name: name,
+      price: price,
+      img: image, // Use 'img' to match catfood.json property
+      stock: stockValue === "true" // Convert to boolean for API
+  };
 
-  let products = JSON.parse(localStorage.getItem("customProducts")) || [];
-
-  if(editIndex === null){
-    // ADD
-    products.push({ id: Date.now(), brand, name, price, stock, image });
+  if (currentEditingProduct) {
+      // ❗ EDITING EXISTING PRODUCT: Use the new API update function
+      updateProductAPI(currentEditingProduct.id, updatedData);
   } else {
-    // EDIT
-    products[editIndex] = { ...products[editIndex], brand, name, price, stock, image };
+      // ❗ ADDING NEW PRODUCT: Since your backend doesn't have a POST route,
+      // we'll revert to the local storage add for now, and alert the user.
+      alert("Adding new products is not implemented in the API yet. Adding locally.");
+      
+      let products = JSON.parse(localStorage.getItem("customProducts")) || [];
+      const newId = "LOCAL-" + Date.now();
+      const newProduct = { id: newId, image: image, stock: stockValue, brand, name, price };
+      products.push(newProduct);
+      localStorage.setItem("customProducts", JSON.stringify(products));
+      loadAdminProducts();
+      closeModal();
   }
-
-  localStorage.setItem("customProducts", JSON.stringify(products));
-  loadAdminProducts();
-  closeModal();
 }
 
-// ========================
-// 🔸 DELETE PRODUCT
-// ========================
+// =======================
+// 🔸 DELETE PRODUCT (Not implemented in API, kept as local for now)
+// =======================
 function deleteProduct(index) {
   if(!confirm("Delete this product?")) return;
 
-  let products = JSON.parse(localStorage.getItem("customProducts")) || [];
-  products.splice(index,1);
-  localStorage.setItem("customProducts", JSON.stringify(products));
-  loadAdminProducts();
+  // Since we are loading from API, we can't delete static API products.
+  alert("Deletion is not implemented for API products. Please implement a DELETE route in server.js.");
+  
+  // NOTE: If you still have local storage products, this logic will break
+  // because the index no longer correlates to the combined list. 
+  // For simplicity, we remove the local storage logic for now.
 }
 
-// ========================
-// 🔸 LOAD PRODUCTS
-// ========================
-function loadAdminProducts() {
+
+// =======================
+// 🔸 LOAD PRODUCTS - API IMPLEMENTATION
+// =======================
+async function loadAdminProducts() {
   const table = document.querySelector("#productTable tbody");
-  table.innerHTML = "";
-  const products = JSON.parse(localStorage.getItem("customProducts")) || [];
+  table.innerHTML = "<tr><td colspan='7'>Loading products...</td></tr>"; 
 
-  products.forEach((p,index) => {
-    table.innerHTML += `
-      <tr>
-        <td>${p.id}</td>
-        <td>${p.brand}</td>
-        <td>${p.name}</td>
-        <td>₱${p.price.toFixed(2)}</td>
-        <td>${p.stock === "true" ? "In Stock" : "Out of Stock"}</td>
-        <td><img src="${p.image}" /></td>
-        <td>
-          <button class="action-btn edit-btn" onclick="openEditProduct(${index})">Edit</button>
-          <button class="action-btn delete-btn" onclick="deleteProduct(${index})">Delete</button>
-        </td>
-      </tr>
-    `;
-  });
+  try {
+    // 1. Fetch products from the server API
+    const response = await fetch(`${API_URL}/api/catfood`); 
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    // 2. Parse the JSON response
+    const products = await response.json();
+
+    // 3. Clear the table and populate with fetched products
+    table.innerHTML = "";
+    
+    products.forEach(p => {
+      const stockStatus = p.stock ? "In Stock" : "Out of Stock";
+      const imagePath = p.img.startsWith('Products/') ? p.img : `Products/${p.img}`;
+
+      table.innerHTML += `
+        <tr>
+          <td>${p.id}</td>
+          <td>${p.brand}</td>
+          <td>${p.name}</td>
+          <td>₱${p.price.toFixed(2)}</td>
+          <td>${stockStatus}</td>
+          <td><img src="${imagePath}" style="max-height: 50px;" /></td> 
+          <td>
+            <button class="action-btn edit-btn" onclick="openEditProduct('${p.id}')">Edit</button>
+            <button class="action-btn delete-btn" onclick="deleteProduct('${p.id}')">Delete</button>
+          </td>
+        </tr>
+      `;
+    });
+
+  } catch (error) {
+    console.error("Error loading products:", error);
+    table.innerHTML = `<tr><td colspan='7'>Error loading products: ${error.message}</td></tr>`;
+  }
 }
 
-// ========================
-// 🔸 INIT
-// ========================
+// Execute on load
 document.addEventListener("DOMContentLoaded", () => {
   loadUsers();
   loadAdminProducts();
