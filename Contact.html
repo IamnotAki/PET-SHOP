@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact the Developer</title>
+  <style>
+    :root{
+      --bg:#f5f7fb; --card:#ffffff; --accent:#5c6bc0; --muted:#6b7280;
+      --radius:12px; --pad:18px;
+    }
+    body{
+      margin:0; font-family:Inter,system-ui,Segoe UI,Arial; background:var(--bg);
+      display:flex; align-items:center; justify-content:center; min-height:100vh; padding:24px;
+    }
+    .card{
+      background:var(--card); border-radius:var(--radius); padding:24px; max-width:820px;
+      width:100%; box-shadow:0 8px 30px rgba(16,24,40,0.06); display:grid; gap:18px;
+      grid-template-columns: 1fr 340px;
+    }
+    @media (max-width:880px){ .card{ grid-template-columns:1fr; } }
+    h1{ margin:0; font-size:20px; letter-spacing:-0.2px; }
+    p.lead{ margin:6px 0 0; color:var(--muted); font-size:14px; }
+    form{ display:flex; flex-direction:column; gap:10px; margin-top:8px; }
+    label{ font-size:13px; color:#111827; }
+    input[type="text"], input[type="email"], textarea{
+      width:100%; padding:10px 12px; border-radius:8px; border:1px solid #e6e9ef; font-size:14px;
+      background:#fff;
+    }
+    textarea{ min-height:110px; resize:vertical; }
+    .row{ display:flex; gap:10px; }
+    .btn{
+      background:var(--accent); color:white; border:0; padding:10px 14px; border-radius:10px;
+      cursor:pointer; font-weight:600; letter-spacing:0.2px;
+    }
+    .btn.ghost{ background:transparent; color:var(--accent); border:1px solid rgba(92,107,192,0.12); }
+    .meta{
+      border-left:1px dashed #eef2ff; padding-left:18px; display:flex; flex-direction:column; gap:12px;
+    }
+    .contact-item{ display:flex; gap:12px; align-items:center; }
+    .contact-item b{ font-size:13px; }
+    .small{ font-size:13px; color:var(--muted); }
+    .copy-btn{ background:#f3f4f8; border:0; padding:6px 8px; border-radius:8px; cursor:pointer; }
+    .hint{ font-size:12px; color:#9aa0b0; margin-top:6px; }
+    .success{ color:green; font-size:13px; }
+  </style>
+</head>
+<body>
+
+  <main class="card" aria-labelledby="contact-title">
+    <section>
+      <h1 id="contact-title">Contact the Developer</h1>
+      <p class="lead">Have feedback, a bug report, or want to collaborate? Send a quick message — or use the direct links on the right.</p>
+
+      <form id="contactForm" novalidate>
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" placeholder="e.g. Maria Santos" required>
+
+        <label for="email">Your email</label>
+        <input id="email" name="email" type="email" placeholder="you@domain.com" required>
+
+        <label for="subject">Subject</label>
+        <input id="subject" name="subject" type="text" placeholder="Short subject">
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell me what's up..." required></textarea>
+
+        <div class="row" style="margin-top:6px;">
+          <button type="submit" class="btn" id="sendBtn">Email the developer</button>
+          <button type="button" class="btn ghost" id="clearBtn">Clear</button>
+        </div>
+
+        <div id="formHint" class="hint" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <aside class="meta" aria-label="Developer contact methods">
+      <div>
+        <div class="contact-item">
+          <div>
+            <div class="small">Email</div>
+            <b id="devEmail">dev@example.com</b>
+            <div style="margin-top:6px;">
+              <button class="copy-btn" data-copy="dev@example.com">Copy email</button>
+              <button class="copy-btn" id="composeBtn">Compose mail</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="contact-item">
+          <div>
+            <div class="small">Phone</div>
+            <b id="devPhone">+63 912 345 6789</b>
+            <div style="margin-top:6px;">
+              <button class="copy-btn" data-copy="+639123456789">Copy phone</button>
+              <a class="copy-btn" style="text-decoration:none; display:inline-block" href="tel:+639123456789">Call</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="contact-item">
+          <div>
+            <div class="small">GitHub</div>
+            <b><a id="devGit" href="https://github.com/your-profile" target="_blank" rel="noopener">github.com/your-profile</a></b>
+            <div style="margin-top:6px;">
+              <button class="copy-btn" data-copy="https://github.com/your-profile">Copy link</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="contact-item">
+          <div>
+            <div class="small">LinkedIn</div>
+            <b><a id="devLinked" href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener">linkedin.com/in/your-profile</a></b>
+            <div style="margin-top:6px;">
+              <button class="copy-btn" data-copy="https://www.linkedin.com/in/your-profile">Copy link</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="small">Quick actions</div>
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <button class="copy-btn" id="saveVCard">Copy vCard text</button>
+          <button class="copy-btn" id="downloadVCard">Download vCard</button>
+        </div>
+        <div id="statusMsg" class="hint" style="margin-top:8px;"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    // --- CONFIGURATION: set your real details here ---
+    const DEV_EMAIL = "dev@example.com";      // replace
+    const DEV_PHONE = "+63 912 345 6789";     // replace
+    const DEV_GITHUB = "https://github.com/your-profile"; // replace
+    const DEV_LINKEDIN = "https://www.linkedin.com/in/your-profile"; // replace
+    const DEV_NAME = "Your Name"; // replace
+    // ------------------------------------------------
+
+    // inject config into UI
+    document.getElementById('devEmail').textContent = DEV_EMAIL;
+    document.getElementById('devPhone').textContent = DEV_PHONE;
+    document.getElementById('devGit').href = DEV_GITHUB;
+    document.getElementById('devGit').textContent = DEV_GITHUB.replace(/^https?:\/\//,'');
+    document.getElementById('devLinked').href = DEV_LINKEDIN;
+    document.getElementById('devLinked').textContent = DEV_LINKEDIN.replace(/^https?:\/\//,'');
+
+    // copy-to-clipboard
+    document.querySelectorAll('[data-copy]').forEach(btn=>{
+      btn.addEventListener('click', async () => {
+        const text = btn.getAttribute('data-copy');
+        try{
+          await navigator.clipboard.writeText(text);
+          showTempStatus('Copied to clipboard ✔', 1800);
+        }catch(err){
+          showTempStatus('Could not copy — select and copy manually', 2500);
+        }
+      });
+    });
+
+    function showTempStatus(msg, ms=1500){
+      const el = document.getElementById('statusMsg');
+      el.textContent = msg;
+      setTimeout(()=>{ if(el.textContent === msg) el.textContent=''; }, ms);
+    }
+
+    // compose mail button - opens default mail client with fields filled
+    document.getElementById('composeBtn').addEventListener('click', ()=> {
+      const subject = encodeURIComponent('Hello from your website');
+      const body = encodeURIComponent(`Hi ${DEV_NAME},%0D%0A%0D%0AI'd like to...%0D%0A%0D%0ARegards,%0D%0A[Your name]`);
+      window.location.href = `mailto:${DEV_EMAIL}?subject=${subject}&body=${body}`;
+    });
+
+    // form submit: validate and open mailto with content prefilled
+    const form = document.getElementById('contactForm');
+    const hint = document.getElementById('formHint');
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      hint.textContent = '';
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const subject = document.getElementById('subject').value.trim() || 'Message from website';
+      const message = document.getElementById('message').value.trim();
+
+      if(!name || !email || !message){
+        hint.textContent = 'Please fill in your name, email and message.';
+        return;
+      }
+      // simple email pattern test
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        hint.textContent = 'Please enter a valid email address.';
+        return;
+      }
+
+      // build mailto
+      const body = encodeURIComponent(
+        `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\n---\nSent from website contact form`
+      );
+      const mailto = `mailto:${DEV_EMAIL}?subject=${encodeURIComponent(subject)}&body=${body}`;
+
+      // Open mail client
+      window.location.href = mailto;
+
+      // give feedback
+      hint.textContent = "Opening your email client... (if nothing happens, copy the email or use the links on the right)";
+    });
+
+    // clear button
+    document.getElementById('clearBtn').addEventListener('click', ()=>{
+      form.reset(); document.getElementById('formHint').textContent = '';
+    });
+
+    // vCard generation for quick download / copy
+    function generateVCard(){
+      // Basic vCard 3.0 text
+      const phone = DEV_PHONE.replace(/\s+/g,'');
+      return [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        `FN:${DEV_NAME}`,
+        `EMAIL;TYPE=INTERNET:${DEV_EMAIL}`,
+        `TEL;TYPE=CELL:${phone}`,
+        `URL:${DEV_GITHUB}`,
+        "END:VCARD"
+      ].join("\n");
+    }
+
+    document.getElementById('saveVCard').addEventListener('click', async ()=>{
+      const txt = generateVCard();
+      try{
+        await navigator.clipboard.writeText(txt);
+        showTempStatus('vCard text copied to clipboard ✔', 1800);
+      }catch{
+        showTempStatus('Could not copy vCard. Use download instead.', 2200);
+      }
+    });
+
+    document.getElementById('downloadVCard').addEventListener('click', ()=>{
+      const data = generateVCard();
+      const blob = new Blob([data], {type: 'text/vcard;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `${DEV_NAME.replace(/\s+/g,'_')}.vcf`;
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // Accessibility nicety: show focus outline for keyboard users
+    (function(){
+      function handleFirstTab(e){
+        if(e.key === 'Tab'){ document.documentElement.classList.add('user-is-tabbing'); window.removeEventListener('keydown', handleFirstTab); }
+      }
+      window.addEventListener('keydown', handleFirstTab);
+    })();
+  </script>
+</body>
+</html>
