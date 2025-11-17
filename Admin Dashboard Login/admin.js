@@ -1,8 +1,8 @@
 // admin.js (MODIFIED)
 
-/* =====================================================
-   ADMIN DASHBOARD JS — NOW API-ENABLED
-======================================================== */
+
+ //  ADMIN DASHBOARD JS — NOW API-ENABLED
+
 
 // Base URL for the API server (IMPORTANT: Use the full URL)
 const API_URL = "http://localhost:3000";
