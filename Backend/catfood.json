@@ -22,8 +22,8 @@
     "brand": "Royal Canid",
     "name": "Royal Canin Kitten",
     "price": 2250,
-    "img": "Products/product7.png",
-    "stock": false,
+    "img": "product7.png",
+    "stock": true,
     "desc": "Timeless Datejust in steel with fluted bezel and jubilee bracelet."
   },
   {

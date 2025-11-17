@@ -231,6 +231,33 @@ async function loadAdminProducts() {
     table.innerHTML = `<tr><td colspan='7'>Error loading products: ${error.message}</td></tr>`;
   }
 }
+async function createProductAPI(data) {
+    try {
+        const response = await fetch(`${API_URL}/api/catfood`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+        
+        const result = await response.json();
+        
+        // Reload products after successful creation
+        await loadAdminProducts();
+        closeModal();
+        alert(`Product ${result.product.id} created successfully!`);
+
+    } catch (error) {
+        console.error("Failed to create new product:", error);
+        alert("Failed to create new product: " + error.message);
+    }
+}
 
 // Execute on load
 document.addEventListener("DOMContentLoaded", () => {
