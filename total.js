@@ -22,8 +22,12 @@ let cartTotal = document.getElementById('cartTotal');
 // =========================
 async function loadProducts() {
   try {
-    const response = await fetch('products.json'); // your API or JSON file
-    const products = await response.json();
+    const response = await fetch('products.json'); // default products
+    let products = await response.json();
+
+    // Add admin-added products from localStorage
+    const customProducts = JSON.parse(localStorage.getItem('customProducts')) || [];
+    products = [...products, ...customProducts];
 
     const container = document.getElementById('products-container');
     container.innerHTML = '';
@@ -240,6 +244,16 @@ function checkoutCart() {
   localStorage.setItem('checkoutCart', JSON.stringify(cart));
   localStorage.removeItem('selectedProduct');
   window.location.href = "checkout.html";
+}
+
+// =========================
+// 🔸 ADD ADMIN PRODUCT FUNCTION
+// =========================
+function addAdminProduct(name, price, image) {
+  const customProducts = JSON.parse(localStorage.getItem('customProducts')) || [];
+  customProducts.push({ name, price, image });
+  localStorage.setItem('customProducts', JSON.stringify(customProducts));
+  loadProducts(); // Reload products including admin ones
 }
 
 // =========================
