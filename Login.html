@@ -139,37 +139,53 @@
         <a href="PET SHOP PROJECT.html" class="back-btn">Back to Home</a>
     </div>
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            // Pag lologin 
-            if (email && password) {
-                let users = JSON.parse(localStorage.getItem('users')) || [];
-                // ✅ Add a default admin if none exists
-                const hasAdmin = users.some(u => u.email === 'admin@animalandia.com');
-                if (!hasAdmin) {
-                    users.push({ email: 'admin@animalandia.com', password: 'Admin123', name: 'Admin' });
-                    localStorage.setItem('users', JSON.stringify(users));}
-                // Now check login
-                    const user = users.find(u => u.email === email && u.password === password);
-                if (user) {
-                localStorage.setItem('loggedInUser', JSON.stringify({ email: user.email, name: user.name }));
-                alert('Login successful! Redirecting...');        
-                    if (user.email === 'admin@animalandia.com')  {
-                    window.location.href = 'admin.html';
-                    } else {
-                        window.location.href = 'PET SHOP PROJECT.html';
-                    }
-                }
-                else {
-                    alert('Invalid email or password.');
-                }
+<script>
+const API_URL = "http://localhost:3000"; 
+
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    login();
+});
+
+function login() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if (!email || !password) {
+        return alert('Please fill in all fields.');
+    }
+
+    const loginData = { email, password };
+
+    fetch(`${API_URL}/api/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loginData)
+    })
+    .then(response => response.json().then(data => ({ status: response.status, body: data })))
+    .then(res => {
+        if (res.status === 200) {
+            const user = res.body.user;
+
+            localStorage.setItem('loggedInUser', JSON.stringify(user));
+
+            alert('Login successful! Redirecting...');
+
+            if (user.email === 'admin@animalandia.com') {
+                localStorage.setItem('loggedIn', 'true'); 
+                window.location.href = 'dashboard.html';
             } else {
-                alert('Please fill in all fields.');
+                window.location.href = 'PET SHOP PROJECT.html'; // redirect here
             }
-        });
-    </script>
+        } else {
+            alert(res.body.message || 'Login failed. Please check your credentials.');
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('Failed to connect to the server. Make sure the backend is running.');
+    });
+}
+</script>
 </body>
 </html>

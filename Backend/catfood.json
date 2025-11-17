@@ -381,7 +381,8 @@
     "brand": "NexGard",
     "name": "NexGard Tablets for Dogs - Effective Pest Management",
     "price": 545,
-    "img": "Health/Nextgard.png",
-    "stock": true
+    "img": "Nextgard.png",
+    "stock": true,
+    "type": "Health Products"
   }
 ]
