@@ -1,6 +1,3 @@
-// ===============================
-// ADMIN DASHBOARD (FIXED VERSION)
-// ===============================
 
 const API_URL = "http://localhost:3000";
 let currentEditingProduct = null;
