@@ -334,7 +334,8 @@
     "name": "Nematocide Dewormer for Pets",
     "price": 96,
     "img": "Health/Pyrantel nematicide.png",
-    "stock": true
+    "stock": true,
+    "type": "Health Products"
   },
   {
     "id": "HP-7",
@@ -381,7 +382,7 @@
     "brand": "NexGard",
     "name": "NexGard Tablets for Dogs - Effective Pest Management",
     "price": 545,
-    "img": "Nextgard.png",
+    "img": "Health/Nextgard.png",
     "stock": true,
     "type": "Health Products"
   }
