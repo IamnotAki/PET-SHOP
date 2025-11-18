@@ -230,6 +230,48 @@
   </section>
 
   <h2 class="section-title">🐱 Cat Food Products 🐱</h2>
+  <div class="products">
+    <div class="product-card" onclick="openProduct('Royal Canin Medium Adult 4kg', 1434, 'Products/product4.png')">
+      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
+      <img src="Products/product4.png" alt="Royal Canin Medium Adult 4kg">
+      <h3>Royal Canin Medium Adult 4kg</h3>
+      <p>₱1,434.00</p>
+      <div class="product-actions">
+        <button class="buy-btn buy">Buy Now</button>
+        <button class="buy-btn add">Add to Cart</button>
+      </div>
+    </div>
+    <div class="product-card" onclick="openProduct('Royal Canin Urinary', 1190, 'Products/product5.png')">
+      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
+      <img src="Products/product5.png" alt="Royal Canin Urinary">
+      <h3>Royal Canin Urinary</h3>
+      <p>₱1,190.00</p>
+      <div class="product-actions">
+        <button class="buy-btn buy">Buy Now</button>
+        <button class="buy-btn add">Add to Cart</button>
+      </div>
+    </div>
+    <div class="product-card" onclick="openProduct('Royal Canin Hairball Care', 1250, 'Products/product6.png')">
+      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
+      <img src="Products/product6.png" alt="Royal Canin Hairball Care">
+      <h3>Royal Canin Hairball Care</h3>
+      <p>₱1,250.00</p>
+      <div class="product-actions">
+        <button class="buy-btn buy">Buy Now</button>
+        <button class="buy-btn add">Add to Cart</button>
+      </div>
+    </div>
+    <div class="product-card" onclick="openProduct('Nutricare Cat Dry Food For All Stages', 1250, 'Products/product14.png')">
+      <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
+      <img src="Products/product14.png" alt="Nutricare Cat Dry Food For All Stages">
+      <h3>Nutricare Cat Dry Food For All Stages</h3>
+      <p>₱1,250.00</p>
+      <div class="product-actions">
+        <button class="buy-btn buy">Buy Now</button>
+        <button class="buy-btn add">Add to Cart</button>
+      </div>
+    </div>
+  </div>
   <!-- Modal -->
   <div id="productModal" class="modal">
     <div class="modal-content">
@@ -278,36 +320,6 @@
     const cartItems = document.getElementById("cartItems");
     const cartTotal = document.getElementById("cartTotal");
 
-    async function loadProducts() {
-      try {
-        const response = await fetch('Backend/catfood.json');
-        const products = await response.json();
-        const container = document.getElementById('products-container');
-        container.innerHTML = '';
-
-        products.forEach(product => {
-          const card = document.createElement('div');
-          card.classList.add('product-card');
-          card.onclick = () => openProduct(product.name, product.price, product.img);
-
-          card.innerHTML = `
-            <div class="like-btn" onclick="toggleLike(this, event)">❤</div>
-            <img src="${product.img}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <p>₱${product.price.toFixed(2)}</p>
-            <div class="product-actions">
-              <button class="buy-btn buy" onclick="buyNowFromCard('${product.name}', ${product.price}, '${product.img}')">Buy Now</button>
-              <button class="buy-btn add" onclick="addToCartFromCard('${product.name}', ${product.price}, '${product.img}')">Add to Cart</button>
-            </div>
-          `;
-
-          container.appendChild(card);
-        });
-      } catch (error) {
-        console.error("Error loading products:", error);
-      }
-    }
-
     function openProduct(name, price, img) {
       currentProduct = { name, price, img };
       modalTitle.textContent = name;
@@ -331,14 +343,6 @@
       updateCartSidebar();
       cartSidebar.classList.add("active");
       closeModal();
-    }
-
-    function addToCartFromCard(name, price, img) {
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cart.push({ name, price, img, qty: 1 });
-      localStorage.setItem('cart', JSON.stringify(cart));
-      updateCartSidebar();
-      cartSidebar.classList.add("active");
     }
 
     function updateCartSidebar() {
@@ -386,26 +390,51 @@
       window.location.href = "checkout.html";
     }
 
-    function buyNowFromCard(name, price, img) {
-      localStorage.setItem('selectedProduct', JSON.stringify({
-        name: name,
-        price: price,
-        image: img,
-        qty: 1
-      }));
-      window.location.href = "checkout.html";
-    }
-
     function closeCart() { cartSidebar.classList.remove("active"); }
     function toggleLike(el, event) {
       event.stopPropagation();
       el.classList.toggle("liked");
     }
+    updateCartSidebar();
 
-    document.addEventListener('DOMContentLoaded', () => {
-      loadProducts();
-      updateCartSidebar();
+    // Para sa Login natin - Arquel
+    function checkLoginStatus() {
+      const user = JSON.parse(localStorage.getItem('loggedInUser'));
+      const userDisplay = document.getElementById('userDisplay');
+      if (user) {
+        userDisplay.innerHTML = `<span>Welcome, ${user.name}</span>`;
+        userDisplay.addEventListener('click', function() {
+          if (confirm('Logout?')) {
+            localStorage.removeItem('loggedInUser');
+            location.reload();
+          }
+        });
+      } else {
+        userDisplay.innerHTML = '<a href="Login.html">Login</a>';
+      }
+    }
+    checkLoginStatus();
+
+    function checkLoginStatus() {
+  const user = JSON.parse(localStorage.getItem('loggedInUser'));
+  const userDisplay = document.getElementById('userDisplay');
+  const adminLink = document.getElementById('adminLink');
+  
+  if (user) {
+    userDisplay.innerHTML = `<span>Welcome, ${user.name}</span>`;
+    if (user.email === 'admin@animalandia.com') {
+      adminLink.style.display = 'block';
+    }
+    userDisplay.addEventListener('click', function() {
+      if (confirm('Logout?')) {
+        localStorage.removeItem('loggedInUser');
+        location.reload();
+      }
     });
+  } else {
+    userDisplay.innerHTML = '<a href="Login.html">Login</a>';
+  }
+}
   </script>
 </body>
 </html>
