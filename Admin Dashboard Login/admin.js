@@ -1,9 +1,3 @@
-// admin.js (MODIFIED)
-
-
- //  ADMIN DASHBOARD JS — NOW API-ENABLED
-
-
 // Base URL for the API server (IMPORTANT: Use the full URL)
 const API_URL = "http://localhost:3000";
 
@@ -187,10 +181,7 @@ function deleteProduct(productId) {
     deleteProductAPI(productId);
 }
 
-
-// =======================
 // 🔸 LOAD PRODUCTS - API IMPLEMENTATION
-// =======================
 async function loadAdminProducts() {
   const table = document.querySelector("#productTable tbody");
   table.innerHTML = "<tr><td colspan='7'>Loading products...</td></tr>"; 
