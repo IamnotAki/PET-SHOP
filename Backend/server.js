@@ -221,5 +221,68 @@ app.delete("/api/catfood/:id", (req, res) => {
     res.status(500).json({ message: "Failed to delete product due to server error." });
   }
 });
+function generateNewUserId(users) {
+  const userPrefix = 'UR - ';
+  let maxId = 0;
+  
+  users.forEach(user => {
+    if (typeof user.ID === 'string' && user.ID.startsWith(userPrefix)) {
+      const numPart = parseInt(user.ID.substring(userPrefix.length).trim());
+      if (!isNaN(numPart) && numPart > maxId) {
+        maxId = numPart;
+      }
+    }
+  });
+
+  // Start IDs at 1 if no existing users have IDs, otherwise increment maxId
+  return `${userPrefix}${maxId > 0 ? maxId + 1 : 1}`;
+}
+
+
+// ✅ NEW: SIGNUP Route (Handles POST request from frontend)
+app.post("/api/signup", (req, res) => {
+  try {
+    // Extract data from the request body
+    const { name, email, password } = req.body;
+    
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "All fields are required for signup." });
+    }
+
+    // Read existing users from user.json
+    let users = readJSON(USERS_FILE); // USERS_FILE should be defined as "user.json"
+    
+    // 1. Check for existing user
+    const existingUser = users.find(u => u.email === email);
+    if (existingUser) {
+      return res.status(409).json({ message: "User with this email already exists." });
+    }
+    
+    // 2. Create new user object with a unique ID
+    const newUserId = generateNewUserId(users);
+    const newUser = {
+      ID: newUserId,
+      name,
+      email,
+      password // In a real app, hash this password!
+    };
+    
+    // 3. Add new user to the array
+    users.push(newUser);
+    
+    // 4. Save the entire updated array back to user.json
+    writeJSON(USERS_FILE, users); 
+
+    // 5. Respond with success
+    res.status(201).json({ 
+      message: "User created successfully", 
+      user: { ID: newUserId, name, email } 
+    });
+
+  } catch (error) {
+    console.error("Error creating new user:", error);
+    res.status(500).json({ message: "Failed to create user due to server error." });
+  }
+});
 
 server.listen(3000, () => console.log("Backend + WS running on http://localhost:3000"));

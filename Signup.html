@@ -146,63 +146,57 @@
     </div>
 
     <script>
-        // Custom Alert functions (replacing the forbidden native alert())
-        function showCustomAlert(message) {
-            document.getElementById('alertMessage').textContent = message;
-            document.getElementById('customAlert').style.display = 'flex';
-        }
+    // Define the API URL
+    const API_URL = "http://localhost:3000";
 
-        function closeCustomAlert() {
-            document.getElementById('customAlert').style.display = 'none';
-        }
+    // ✅ NEW FUNCTION: Displays a custom alert message (using your existing function, or alert)
+    function showCustomAlert(message) {
+        alert(message);
+    }
 
-        // Form Submission Logic
-        document.getElementById('signupForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+    // ✅ NEW LOGIC: Use fetch API to send data to the server
+    document.getElementById('signupForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
 
-            if (name && email && password && confirmPassword) {
-                if (password === confirmPassword) {
-                    // Simulate signup (store in localStorage for demo)
-                    let users = JSON.parse(localStorage.getItem('users')) || [];
-                    const existingUser = users.find(user => user.email === email);
-                    
-                    // Add default admin if it doesn't exist
-                    const hasAdmin = users.some(u => u.email === 'admin@animalandia.com');
-                    if (!hasAdmin) {
-                        // Using a simple, non-production way to manage users for demo purposes
-                        users.push({ email: 'admin@animalandia.com', password: 'Admin123', name: 'Admin' });
-                    }
+        if (name && email && password && confirmPassword) {
+            if (password === confirmPassword) {
+                
+                const userData = { name, email, password };
 
-                    if (existingUser && existingUser.email !== 'admin@animalandia.com') {
-                        showCustomAlert('User already exists. Please login.');
-                        // Note: To avoid immediate redirect after alert, we use a timeout
+                try {
+                    // Send a POST request to the new signup endpoint
+                    const response = await fetch(`${API_URL}/api/signup`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(userData)
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) { // Status 200-299 means success
+                        showCustomAlert('Sign up successful! Please login.');
+                        // Redirect to login page after successful signup
                         setTimeout(() => { window.location.href = 'Login.html'; }, 1000); 
                     } else {
-                        // Check again for existing user, excluding the default admin we just created
-                        const nonAdminExisting = users.find(user => user.email === email && user.email !== 'admin@animalandia.com');
-                        if (nonAdminExisting) {
-                            showCustomAlert('User already exists. Please login.');
-                            setTimeout(() => { window.location.href = 'Login.html'; }, 1000); 
-                            return;
-                        }
-                        
-                        // Register new user
-                        users.push({ name, email, password });
-                        localStorage.setItem('users', JSON.stringify(users));
-                        showCustomAlert('Sign up successful! Please login.');
-                        setTimeout(() => { window.location.href = 'Login.html'; }, 1000); 
+                        // Display error message from the server (e.g., user exists)
+                        showCustomAlert(data.message || 'Signup failed. Please try again.');
                     }
-                } else {
-                    showCustomAlert('Passwords do not match.');
+                } catch (error) {
+                    console.error("Signup failed:", error);
+                    showCustomAlert("Network error. Could not connect to the server.");
                 }
+
             } else {
-                showCustomAlert('Please fill in all fields.');
+                showCustomAlert('Passwords do not match.');
             }
-        });
-    </script>
+        } else {
+            showCustomAlert('Please fill in all fields.');
+        }
+    });
+</script>
 </body>
 </html>

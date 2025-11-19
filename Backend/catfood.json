@@ -4,7 +4,7 @@
     "brand": "Royal Canid",
     "name": "Royal Canin Urinary",
     "price": 1190,
-    "img": "product5.png",
+    "img": "Products/product5.png",
     "stock": true,
     "type": "Cat Food"
   },
@@ -21,16 +21,18 @@
     "brand": "Royal Canid",
     "name": "Royal Canin Kitten",
     "price": 2250,
-    "img": "product7.png",
-    "stock": true
+    "img": "Products/product7.png",
+    "stock": true,
+    "type": "Cat Food"
   },
   {
     "id": "CF-4",
     "brand": "Royal Canid",
     "name": "Nutricare Cat Dry Food For All Stages",
     "price": 1250,
-    "img": "Products/product5.png14",
-    "stock": true
+    "img": "Products/product5.png",
+    "stock": true,
+    "type": "Cat Food"
   },
   {
     "id": "CF-5",
