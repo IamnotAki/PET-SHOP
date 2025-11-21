@@ -35,14 +35,6 @@
     "type": "Cat Food"
   },
   {
-    "id": "CF-5",
-    "brand": "Royal Canid",
-    "name": "Royal Canin Maxi Adult",
-    "price": 2595,
-    "img": "Products/product2.png",
-    "stock": true
-  },
-  {
     "id": "DF-1",
     "brand": "Royal Canid",
     "name": "Royal Canin Mini Adult 1.5kg",
